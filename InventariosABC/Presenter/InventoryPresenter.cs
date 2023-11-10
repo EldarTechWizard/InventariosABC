@@ -23,8 +23,6 @@ namespace InventariosABC.Presenter
             this.view = view;
             sqlRepository = new InventorySqlRepository();
 
-
-
             DataTable dt = new DataTable();
             GetRecords(ref dt);
             GetProduct();

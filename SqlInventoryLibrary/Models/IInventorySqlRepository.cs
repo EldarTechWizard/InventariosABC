@@ -18,7 +18,8 @@ namespace SqlInventoryLibrary.Models
         bool GetAllProducts(ref DataTable data);
         bool InsertProducts(Product product);
         bool DeleteProduct(int productID);
-        bool UpdateProducts(int productId, string field, string value);
+        bool UpdateProducts(Product product);
+        bool GetOneProduct(ref Product product);
 
     }
 }

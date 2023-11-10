@@ -231,7 +231,7 @@ namespace SqlInventoryLibrary.Repository
             }
         }
 
-        public bool UpdateProducts(int productId, string field, string value)
+        public bool UpdateProducts(Product product)
         {
             try
             {
@@ -240,12 +240,39 @@ namespace SqlInventoryLibrary.Repository
                 {
                     conn.Open();
                     cmd.Connection = conn;
-                    cmd.CommandText = "update products set @field = @value where productId = @productId";
-                    cmd.Parameters.AddWithValue("@productId", productId);
-                    cmd.Parameters.AddWithValue("@field", field);
-                    cmd.Parameters.AddWithValue("@value", value);
+                    cmd.CommandText = "update products set description = @description, salePrice = @salePrice  where productId = @productId";
+                    cmd.Parameters.AddWithValue("@productId", product.ProductID);
+                    cmd.Parameters.AddWithValue("@description", product.Description);
+                    cmd.Parameters.AddWithValue("@salePrice", product.SalePrice);
                     cmd.ExecuteNonQuery();
 
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                lastError = ex.Message;
+                return false;
+            }
+        }
+
+        public bool GetOneProduct(ref Product product)
+        {
+            try
+            {   
+                DataTable dt = new DataTable();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.Connection = conn;
+                    cmd.CommandText = "Select * from products where productId = @productId";
+                    cmd.Parameters.AddWithValue("@productId", product.ProductID);
+                    dt.Load(cmd.ExecuteReader());
+
+                    product.Description = dt.Rows[0]["description"].ToString();
+                    product.SalePrice = (double)dt.Rows[0]["salePrice"];
+                    product.Balance = (double)dt.Rows[0]["balance"];
                 }
                 return true;
             }
