@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using SqlInventoryLibrary.Models;
 
 namespace SqlInventoryLibrary.Repository
 {
-    public class InventorySqlRepository
+    public class InventorySqlRepository : IInventorySqlRepository
     {
         private string connectionString;
         private string lastError;
+
+
+        string IInventorySqlRepository.LastError => lastError;
+
         public InventorySqlRepository() 
         { 
             this.connectionString = Properties.Settings.Default["StrConn"].ToString();
         }
 
-        public string LastError { get => lastError; }
 
         public bool InsertNewsRegisters(Record record)
         {
