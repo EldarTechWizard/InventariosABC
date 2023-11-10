@@ -21,6 +21,29 @@ namespace InventariosABC.Presenter
             sqlRepository = new InventorySqlRepository();
         }
 
+        public void GetAllProducts()
+        {
 
+        }
+
+        public void GetOneProduct()
+        {
+
+        }
+
+        public void InsertNewProduct()
+        {
+
+        }
+
+        public void UpdateProduct()
+        {
+
+        }
+
+        public void DeleteProduct()
+        {
+
+        }
     }
 }

@@ -10,12 +10,12 @@ namespace SqlInventoryLibrary.Models
     {
         private int productID;
         private string description;
-        private string salePrice;
+        private double salePrice;
         private double balance;
 
         public int ProductID { get => productID; set => productID = value; }
         public string Description { get => description; set => description = value; }
-        public string SalePrice { get => salePrice; set => salePrice = value; }
+        public double SalePrice { get => salePrice; set => salePrice = value; }
         public double Balance { get => balance; set => balance = value; }
     }
 }
