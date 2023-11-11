@@ -35,7 +35,7 @@
             this.drpDwnBtnMovement = new DevExpress.XtraEditors.DropDownButton();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.tbIProductId = new CustomControls.RJControls.RJTextBox();
+            this.tbProductId = new CustomControls.RJControls.RJTextBox();
             this.lueDescription = new DevExpress.XtraEditors.LookUpEdit();
             this.label3 = new System.Windows.Forms.Label();
             this.tbQuantity = new CustomControls.RJControls.RJTextBox();
@@ -49,11 +49,6 @@
             this.tbTotal = new CustomControls.RJControls.RJTextBox();
             this.btnClear = new CustomControls.RJControls.RJButton();
             this.btnDelete = new CustomControls.RJControls.RJButton();
-            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.lueDescription.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gcRecords)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
@@ -96,7 +91,7 @@
             this.dpDate.BorderSize = 0;
             this.dpDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F);
             this.dpDate.Location = new System.Drawing.Point(456, 70);
-            this.dpDate.MinimumSize = new System.Drawing.Size(0, 35);
+            this.dpDate.MinimumSize = new System.Drawing.Size(4, 35);
             this.dpDate.Name = "dpDate";
             this.dpDate.Size = new System.Drawing.Size(290, 35);
             this.dpDate.SkinColor = System.Drawing.Color.MediumSlateBlue;
@@ -137,28 +132,28 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Producto:";
             // 
-            // tbIProductId
+            // tbProductId
             // 
-            this.tbIProductId.BackColor = System.Drawing.SystemColors.Window;
-            this.tbIProductId.BorderColor = System.Drawing.Color.MediumSlateBlue;
-            this.tbIProductId.BorderFocusColor = System.Drawing.Color.HotPink;
-            this.tbIProductId.BorderRadius = 0;
-            this.tbIProductId.BorderSize = 2;
-            this.tbIProductId.Enabled = false;
-            this.tbIProductId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbIProductId.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tbIProductId.Location = new System.Drawing.Point(155, 178);
-            this.tbIProductId.Margin = new System.Windows.Forms.Padding(4);
-            this.tbIProductId.Multiline = false;
-            this.tbIProductId.Name = "tbIProductId";
-            this.tbIProductId.Padding = new System.Windows.Forms.Padding(10, 7, 10, 7);
-            this.tbIProductId.PasswordChar = false;
-            this.tbIProductId.PlaceholderColor = System.Drawing.Color.DarkGray;
-            this.tbIProductId.PlaceholderText = "";
-            this.tbIProductId.Size = new System.Drawing.Size(115, 35);
-            this.tbIProductId.TabIndex = 7;
-            this.tbIProductId.Texts = "";
-            this.tbIProductId.UnderlinedStyle = false;
+            this.tbProductId.BackColor = System.Drawing.SystemColors.Window;
+            this.tbProductId.BorderColor = System.Drawing.Color.MediumSlateBlue;
+            this.tbProductId.BorderFocusColor = System.Drawing.Color.HotPink;
+            this.tbProductId.BorderRadius = 0;
+            this.tbProductId.BorderSize = 2;
+            this.tbProductId.Enabled = false;
+            this.tbProductId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbProductId.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tbProductId.Location = new System.Drawing.Point(155, 178);
+            this.tbProductId.Margin = new System.Windows.Forms.Padding(4);
+            this.tbProductId.Multiline = false;
+            this.tbProductId.Name = "tbProductId";
+            this.tbProductId.Padding = new System.Windows.Forms.Padding(10, 7, 10, 7);
+            this.tbProductId.PasswordChar = false;
+            this.tbProductId.PlaceholderColor = System.Drawing.Color.DarkGray;
+            this.tbProductId.PlaceholderText = "";
+            this.tbProductId.Size = new System.Drawing.Size(115, 35);
+            this.tbProductId.TabIndex = 7;
+            this.tbProductId.Texts = "";
+            this.tbProductId.UnderlinedStyle = false;
             // 
             // lueDescription
             // 
@@ -254,12 +249,6 @@
             // 
             // gridView1
             // 
-            this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.gridColumn1,
-            this.gridColumn2,
-            this.gridColumn3,
-            this.gridColumn4,
-            this.gridColumn5});
             this.gridView1.GridControl = this.gcRecords;
             this.gridView1.Name = "gridView1";
             // 
@@ -349,51 +338,6 @@
             this.btnDelete.TextColor = System.Drawing.Color.White;
             this.btnDelete.UseVisualStyleBackColor = false;
             // 
-            // gridColumn1
-            // 
-            this.gridColumn1.Caption = "gridColumn1";
-            this.gridColumn1.MinWidth = 25;
-            this.gridColumn1.Name = "gridColumn1";
-            this.gridColumn1.Visible = true;
-            this.gridColumn1.VisibleIndex = 0;
-            this.gridColumn1.Width = 94;
-            // 
-            // gridColumn2
-            // 
-            this.gridColumn2.Caption = "gridColumn2";
-            this.gridColumn2.MinWidth = 25;
-            this.gridColumn2.Name = "gridColumn2";
-            this.gridColumn2.Visible = true;
-            this.gridColumn2.VisibleIndex = 1;
-            this.gridColumn2.Width = 94;
-            // 
-            // gridColumn3
-            // 
-            this.gridColumn3.Caption = "gridColumn3";
-            this.gridColumn3.MinWidth = 25;
-            this.gridColumn3.Name = "gridColumn3";
-            this.gridColumn3.Visible = true;
-            this.gridColumn3.VisibleIndex = 2;
-            this.gridColumn3.Width = 94;
-            // 
-            // gridColumn4
-            // 
-            this.gridColumn4.Caption = "gridColumn4";
-            this.gridColumn4.MinWidth = 25;
-            this.gridColumn4.Name = "gridColumn4";
-            this.gridColumn4.Visible = true;
-            this.gridColumn4.VisibleIndex = 3;
-            this.gridColumn4.Width = 94;
-            // 
-            // gridColumn5
-            // 
-            this.gridColumn5.Caption = "gridColumn5";
-            this.gridColumn5.MinWidth = 25;
-            this.gridColumn5.Name = "gridColumn5";
-            this.gridColumn5.Visible = true;
-            this.gridColumn5.VisibleIndex = 4;
-            this.gridColumn5.Width = 94;
-            // 
             // InventoryView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -411,7 +355,7 @@
             this.Controls.Add(this.tbQuantity);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lueDescription);
-            this.Controls.Add(this.tbIProductId);
+            this.Controls.Add(this.tbProductId);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.drpDwnBtnMovement);
@@ -438,7 +382,7 @@
         private DevExpress.XtraEditors.DropDownButton drpDwnBtnMovement;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private CustomControls.RJControls.RJTextBox tbIProductId;
+        private CustomControls.RJControls.RJTextBox tbProductId;
         private DevExpress.XtraEditors.LookUpEdit lueDescription;
         private System.Windows.Forms.Label label3;
         private CustomControls.RJControls.RJTextBox tbQuantity;
@@ -447,11 +391,6 @@
         private CustomControls.RJControls.RJTextBox tbSalePrice;
         private DevExpress.XtraGrid.GridControl gcRecords;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
         private CustomControls.RJControls.RJButton btnSave;
         private System.Windows.Forms.Label label6;
         private CustomControls.RJControls.RJTextBox tbTotal;

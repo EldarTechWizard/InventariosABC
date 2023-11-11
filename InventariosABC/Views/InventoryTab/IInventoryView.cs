@@ -13,6 +13,7 @@ namespace InventariosABC.Views.InventoryTab
         int Folio {  get; set; }
         string Date { get; set; }
         string MovementType { get; set; }
+        int productId { get; set; }
         string Description { get; set; }
         int Quantity { get; set; }       
         double SalesPrice { get; set; }

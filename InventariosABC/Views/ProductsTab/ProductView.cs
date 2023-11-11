@@ -17,10 +17,10 @@ namespace InventariosABC.Views.ProductsTab
             InitializeComponent();
         }
 
-        public int productId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double SalePrice { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double Balance { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int productId { get => int.Parse(tbProductId.Texts); set => tbProductId.Texts = value.ToString(); }
+        public string description { get => tbDescription.Texts; set => tbDescription.Texts = value; }
+        public double SalePrice { get => double.Parse(tbSalePrice.Texts); set => tbSalePrice.Texts = value.ToString(); }
+        public double Balance { get => double.Parse(tbBalance.Texts); set => tbBalance.Texts = value.ToString(); }
 
         public event EventHandler SaveEvent;
         public event EventHandler EditEvent;

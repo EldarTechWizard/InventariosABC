@@ -23,11 +23,49 @@ namespace InventariosABC.Presenter
         {
             this.view = view;
             sqlRepository = new InventorySqlRepository();
+            this.view.SaveEvent += this.SaveEvent;
+            this.view.DeleteEvent += this.DeleteEvent;
+            this.view.ClearEvent += this.ClearEvent;
+            this.view.FolioChangedEvent += this.FolioChangedEvent;
+            this.view.KeyPressEvent += this.KeyPressEvent;
 
             DataTable dt = new DataTable();
             GetRecords(ref dt);
             GetProduct();
         }
+
+        public void SaveEvent(object sender, EventArgs e)
+        {
+            SaveFolio();
+        }
+
+        public void DeleteEvent(object sender, EventArgs e)
+        {
+            DeleteFolio();
+        }
+        public void ClearEvent(object sender, EventArgs e)
+        {
+            CleanFolio();
+        }
+        public void FolioChangedEvent(object sender, EventArgs e)
+        {
+
+        }
+
+        public void KeyPressEvent(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == (char)Keys.Enter)
+            {
+                DetailsRecord detailsRecord = new DetailsRecord();
+                detailsRecord.ProductId = view.productId;
+                detailsRecord.Quantity = view.Quantity;
+            
+                DetailsList.Add(detailsRecord);
+
+
+            }
+        }
+
 
         public void GetRecords(ref DataTable data)
         {

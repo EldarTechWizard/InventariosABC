@@ -15,15 +15,34 @@ namespace InventariosABC.Views.InventoryTab
         public InventoryView()
         {
             InitializeComponent();
+            AssociateAndRaiseViewEvents();
         }
 
-        public int Folio { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Date { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string MovementType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int Quantity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double SalesPrice { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double TotalAmount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public void AssociateAndRaiseViewEvents()
+        {
+            btnSave.Click += delegate { SaveEvent?.Invoke(this, EventArgs.Empty); };
+            btnDelete.Click += delegate { DeleteEvent?.Invoke(this, EventArgs.Empty); };
+            btnClear.Click += delegate { ClearEvent?.Invoke(this, EventArgs.Empty); };
+
+            tbFolio._TextChanged += delegate { FolioChangedEvent?.Invoke(this, EventArgs.Empty); };
+
+            this.KeyPress += (s, e) =>
+            {
+                KeyPressEvent?.Invoke(s, e);
+            };
+        }
+
+
+        public int Folio { get => int.Parse(tbFolio.Texts); set => tbFolio.Texts = value.ToString(); }
+        public string Date { get => dpDate.Text; set => dpDate.Text = value;}
+        public string MovementType { get => drpDwnBtnMovement.Text; set => drpDwnBtnMovement.Text = value; }
+        public int productId { get => int.Parse(tbProductId.Texts); set => tbProductId.Texts = value.ToString(); }
+        public string Description { get => lueDescription.Text; set => lueDescription.Text = value; }
+        public int Quantity { get => int.Parse(tbQuantity.Texts); set => tbQuantity.Texts = value.ToString(); }
+        public double SalesPrice { get => double.Parse(tbSalePrice.Texts); set => tbSalePrice.Texts = value.ToString(); }
+        public double TotalAmount { get => double.Parse(tbTotal.Texts); set => tbTotal.Texts = value.ToString(); }
+        
+        
 
         public event EventHandler SaveEvent;
         public event EventHandler DeleteEvent;
@@ -33,7 +52,7 @@ namespace InventariosABC.Views.InventoryTab
 
         public void SetDataSourceDataGrid(DataTable data)
         {
-            throw new NotImplementedException();
+            gcRecords.DataSource = data;
         }
     }
 }
