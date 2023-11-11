@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using InventariosABC.Presenter;
+using InventariosABC.Views.InventoryTab;
 using InventariosABC.Views.MainTab;
 namespace InventariosABC
 {
@@ -16,7 +18,13 @@ namespace InventariosABC
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainView());
+
+
+            IInventoryView Iview = new InventoryView();
+            new InventoryPresenter(Iview);
+
+
+            Application.Run((Form)Iview);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace InventariosABC.Presenter
         private IInventorySqlRepository sqlRepository;
         private Dictionary<int,Record> records = new Dictionary<int,Record>();
         private List<DetailsRecord> DetailsList = new List<DetailsRecord>();
+        private Dictionary<int,Product> productList = new Dictionary<int,Product>();
         public InventoryPresenter(IInventoryView view)
         {
             this.view = view;
@@ -28,10 +29,24 @@ namespace InventariosABC.Presenter
             this.view.ClearEvent += this.ClearEvent;
             this.view.FolioChangedEvent += this.FolioChangedEvent;
             this.view.KeyPressEvent += this.KeyPressEvent;
+            this.view.LoadEvent += this.LoadEvent;
+            this.view.DescriptionChanged += this.DescriptionChanged;
+            this.view.InsertEvent += this.InsertEvent;
+        }
 
+        public void LoadEvent(object sender, EventArgs e)
+        {
+            GetProducts();
             DataTable dt = new DataTable();
             GetRecords(ref dt);
-            GetProduct();
+
+            DataTable data = new DataTable();
+            data.Columns.Add("productId", typeof(String));
+            data.Columns.Add("description", typeof(String));
+            data.Columns.Add("quantity", typeof(double));
+            data.Columns.Add("salePrice", typeof(double));
+            data.Columns.Add("amount", typeof(double));
+            view.SetDataSourceDataGrid(data);
         }
 
         public void SaveEvent(object sender, EventArgs e)
@@ -49,20 +64,40 @@ namespace InventariosABC.Presenter
         }
         public void FolioChangedEvent(object sender, EventArgs e)
         {
-
+            UpdateDataGrid();
         }
 
-        public void KeyPressEvent(object sender, KeyPressEventArgs e)
+        public void DescriptionChanged(object sender, EventArgs e)
         {
-            if(e.KeyChar == (char)Keys.Enter)
+            AutoFillTextBox();
+        }
+
+        public void InsertEvent(object sender, EventArgs e)
+        {
+            DetailsRecord detailsRecord = new DetailsRecord();
+            Product product = new Product();
+            product.ProductID = view.ProductId;
+            product.SalePrice = view.SalesPrice;
+            product.Description = view.Description;
+
+            detailsRecord.Product = product;
+            detailsRecord.Quantity = view.Quantity;
+            detailsRecord.Amount = view.Quantity * product.SalePrice;
+
+            view.TotalAmount += detailsRecord.Amount;
+
+            DetailsList.Add(detailsRecord);
+
+            AddNewRowDG();
+
+            view.ClearAllTextBox();
+        }
+
+        public void KeyPressEvent(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
             {
-                DetailsRecord detailsRecord = new DetailsRecord();
-                detailsRecord.ProductId = view.productId;
-                detailsRecord.Quantity = view.Quantity;
-            
-                DetailsList.Add(detailsRecord);
-
-
+                
             }
         }
 
@@ -82,7 +117,7 @@ namespace InventariosABC.Presenter
 
                     record.Folio = (int)row["folio"];
                     record.Date = row["entryDate"].ToString();
-                    record.Total = (double)row["total"];
+                    record.Total = double.Parse(row["total"].ToString());
                     record.MovementType = row["movementType"].ToString();
 
                     records.Add(record.Folio, record);
@@ -94,13 +129,13 @@ namespace InventariosABC.Presenter
             }           
         }
 
-        public void GetProduct()
+        public void GetProducts()
         {
             try
             {
                 DataTable dataTable = new DataTable();
 
-                if(sqlRepository.GetAllProducts(ref dataTable))
+                if(!sqlRepository.GetAllProducts(ref dataTable))
                 {
                     throw new Exception(sqlRepository.LastError);
                 }
@@ -111,15 +146,28 @@ namespace InventariosABC.Presenter
 
                     product.ProductID = (int)row["productId"];
                     product.Description = row["description"].ToString();
-                    product.SalePrice = (double)row["salePrice"];
-                    product.Balance = (double)row["balance"];
+                    product.SalePrice = double.Parse(row["salePrice"].ToString());
+                    product.Balance = double.Parse(row["balance"].ToString());
+
+                    productList.Add(product.ProductID, product);
                 }
 
-                //Agregar el lookUpEdit
+                view.SetDataSourceLookUpEdit(dataTable);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+        public void AddNewRowDG()
+        {
+            try
+            {
+                view.AddNewRowDataGrid();
+            }catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -128,8 +176,20 @@ namespace InventariosABC.Presenter
             try
             {
                 DataTable data = new DataTable();
-                GetRecords(ref data);
+
+                if(!records.ContainsKey(view.Folio))
+                {
+                    return;
+                }
+
+
+                if(!sqlRepository.GetAllTransactionData(ref data, view.Folio))
+                {
+                    throw new Exception(sqlRepository.LastError);
+                }
+
                 view.SetDataSourceDataGrid(data);
+                view.ClearProducTextBox();
             }
             catch (Exception ex)
             {
@@ -147,7 +207,7 @@ namespace InventariosABC.Presenter
                 record.Date = view.Date;
                 record.MovementType = view.MovementType;
                 record.Total = view.TotalAmount;
-                record.DetailsRecords = DetailsList; // Programar el evento keyPress "Enter" para agregar productos a la lista 
+                record.DetailsRecords = DetailsList;  
 
                 sqlRepository.InsertNewsRegisters(record);
             }
@@ -172,20 +232,25 @@ namespace InventariosABC.Presenter
             }
         }
 
+        public void AutoFillTextBox()
+        {
+            try
+            {
+                Product product = productList[int.Parse(view.EditValue)];
+                view.ProductId = product.ProductID;
+                view.SalesPrice = product.SalePrice;
+                view.Balance = product.Balance;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
         public void CleanFolio()
         {
-            //Programar los textBox primero
+            view.ClearAllTextBox();
         }
-
-
-        public void CalculateSaleAmount(ref int salesAmount)
-        {
-            int quantity = view.Quantity;
-            double salePrice = view.SalesPrice;
-
-            salesAmount = salesAmount * quantity;
-        }
-
 
         
     }

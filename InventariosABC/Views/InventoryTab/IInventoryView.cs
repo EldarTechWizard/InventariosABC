@@ -13,19 +13,27 @@ namespace InventariosABC.Views.InventoryTab
         int Folio {  get; set; }
         string Date { get; set; }
         string MovementType { get; set; }
-        int productId { get; set; }
-        string Description { get; set; }
-        int Quantity { get; set; }       
+        int ProductId { get; set; }
+        string Description { get; set; }            
         double SalesPrice { get; set; }
-
+        double Balance { get; set; }
+        int Quantity { get; set; }
+        string EditValue { get; set; }
         double TotalAmount { get; set; }
 
+        event EventHandler LoadEvent;
         event EventHandler SaveEvent;
         event EventHandler DeleteEvent;
         event EventHandler ClearEvent;
         event EventHandler FolioChangedEvent;
-        event KeyPressEventHandler KeyPressEvent;
-
+        event KeyEventHandler KeyPressEvent;
+        event EventHandler InsertEvent;
+        event EventHandler DescriptionChanged;
         void SetDataSourceDataGrid(DataTable data);
+        void SetDataSourceLookUpEdit(DataTable data);
+        void AddNewRowDataGrid();
+        void ClearAllTextBox();
+
+        void ClearProducTextBox();
     }
 }

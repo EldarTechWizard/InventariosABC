@@ -9,10 +9,12 @@ namespace SqlInventoryLibrary.Models
 {
     public class DetailsRecord
     {
-        private int productId;
+        private Product product;
         private int quantity;
+        private double amount;
 
+        public Product Product { get => product; set => product = value; }
         public int Quantity { get => quantity; set => quantity = value; }
-        public int ProductId { get => productId; set => productId = value; }
+        public double Amount { get => amount; set => amount = value; }
     }
 }
