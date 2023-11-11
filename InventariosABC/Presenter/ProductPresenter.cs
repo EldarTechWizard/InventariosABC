@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace InventariosABC.Presenter
 {
@@ -24,53 +25,110 @@ namespace InventariosABC.Presenter
 
         public void GetAllProducts()
         {
-            DataTable data = new DataTable();
-            sqlRepository.GetAllProducts(ref data);
+            try
+            {
+                DataTable data = new DataTable();
+                if(!sqlRepository.GetAllProducts(ref data))
+                {
+                    throw new Exception(sqlRepository.LastError);
+                }
 
-            view.SetDataGridSource(data);
+                view.SetDataGridSource(data);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
 
         public void GetOneProduct()
         {
-            Product product = new Product();
-            product.ProductID = view.productId;
+            try
+            {
+                Product product = new Product
+                {
+                    ProductID = view.productId
+                };
 
-            sqlRepository.GetOneProduct(ref product);
+                if(!sqlRepository.GetOneProduct(ref product))
+                {
+                    throw new Exception(sqlRepository.LastError);
+                }
 
-            view.description = view.description;
-            view.SalePrice = view.SalePrice;
-            view.Balance = view.Balance;
+                view.description = view.description;
+                view.SalePrice = view.SalePrice;
+                view.Balance = view.Balance;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
 
         public void InsertNewProduct()
         {
-            Product product = new Product();
-            product.ProductID = view.productId;
-            product.Description = view.description;
-            product.SalePrice = view.SalePrice;
-            product.Balance = view.Balance;
+            try
+            {
+                Product product = new Product
+                {
+                    ProductID = view.productId,
+                    Description = view.description,
+                    SalePrice = view.SalePrice,
+                    Balance = view.Balance
+                };
 
-            sqlRepository.InsertProducts(product);
+                sqlRepository.InsertProducts(product);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
 
         public void UpdateProduct()
         {
-            Product product = new Product();
-            product.ProductID = view.productId;
-            product.Description = view.description;
-            product.SalePrice= view.SalePrice;
-            product.Balance= view.Balance;  
+            try
+            {
+                Product product = new Product
+                {
+                    ProductID = view.productId,
+                    Description = view.description,
+                    SalePrice = view.SalePrice,
+                    Balance = view.Balance
+                };
 
-            sqlRepository.UpdateProducts(product);
+                if (!sqlRepository.UpdateProducts(product))
+                {
+                    throw new Exception(sqlRepository.LastError);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
 
         public void DeleteProduct()
         {
-            Product product = new Product();
-            product.ProductID = view.productId;
+            try
+            {
+                Product product = new Product
+                {
+                    ProductID = view.productId
+                };
 
-            sqlRepository.DeleteProduct(product.ProductID);
-            GetAllProducts();
+                if (!sqlRepository.DeleteProduct(product.ProductID))
+                {
+                    throw new Exception(sqlRepository.LastError);
+                }
+
+
+                GetAllProducts();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
     }
 }

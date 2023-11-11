@@ -16,5 +16,24 @@ namespace InventariosABC.Views.InventoryTab
         {
             InitializeComponent();
         }
+
+        public int Folio { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Date { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string MovementType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int Quantity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double SalesPrice { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double TotalAmount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public event EventHandler SaveEvent;
+        public event EventHandler DeleteEvent;
+        public event EventHandler ClearEvent;
+        public event EventHandler FolioChangedEvent;
+        public event KeyPressEventHandler KeyPressEvent;
+
+        public void SetDataSourceDataGrid(DataTable data)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

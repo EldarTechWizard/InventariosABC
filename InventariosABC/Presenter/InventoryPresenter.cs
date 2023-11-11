@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace InventariosABC.Presenter
 {
@@ -30,62 +31,107 @@ namespace InventariosABC.Presenter
 
         public void GetRecords(ref DataTable data)
         {
-            sqlRepository.GetAllRegisters(ref data);
-
-            foreach (DataRow row in data.Rows)
+            try
             {
-                Record record = new Record();
+                if(!sqlRepository.GetAllRegisters(ref data))
+                {
+                    throw new Exception(sqlRepository.LastError);
+                }
 
-                record.Folio = (int)row["folio"];
-                record.Date = row["entryDate"].ToString();
-                record.Total = (double)row["total"];
-                record.MovementType = row["movementType"].ToString();
+                foreach (DataRow row in data.Rows)
+                {
+                    Record record = new Record();
 
-                records.Add(record.Folio, record);
+                    record.Folio = (int)row["folio"];
+                    record.Date = row["entryDate"].ToString();
+                    record.Total = (double)row["total"];
+                    record.MovementType = row["movementType"].ToString();
+
+                    records.Add(record.Folio, record);
+                }
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }           
         }
 
         public void GetProduct()
         {
-            DataTable dataTable = new DataTable();
-            sqlRepository.GetAllProducts(ref dataTable);
-
-            foreach (DataRow row in dataTable.Rows)
+            try
             {
-                Product product = new Product();
+                DataTable dataTable = new DataTable();
 
-                product.ProductID = (int)row["productId"];
-                product.Description = row["description"].ToString();
-                product.SalePrice = (double)row["salePrice"];
-                product.Balance = (double)row["balance"];
+                if(sqlRepository.GetAllProducts(ref dataTable))
+                {
+                    throw new Exception(sqlRepository.LastError);
+                }
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    Product product = new Product();
+
+                    product.ProductID = (int)row["productId"];
+                    product.Description = row["description"].ToString();
+                    product.SalePrice = (double)row["salePrice"];
+                    product.Balance = (double)row["balance"];
+                }
+
+                //Agregar el lookUpEdit
             }
-
-            //Agregar el lookUpEdit
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
 
         public void UpdateDataGrid()
         {
-            DataTable data = new DataTable();
-            GetRecords(ref data);
-            view.SetDataSourceDataGrid(data);
+            try
+            {
+                DataTable data = new DataTable();
+                GetRecords(ref data);
+                view.SetDataSourceDataGrid(data);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
 
         public void SaveFolio()
         {
-            Record record = new Record();
+            try
+            {
+                Record record = new Record();
 
-            record.Folio = view.Folio;
-            record.Date = view.Date;
-            record.MovementType = view.MovementType;
-            record.Total = view.TotalAmount;
-            record.DetailsRecords = DetailsList; // Programar el evento keyPress "Enter" para agregar productos a la lista 
+                record.Folio = view.Folio;
+                record.Date = view.Date;
+                record.MovementType = view.MovementType;
+                record.Total = view.TotalAmount;
+                record.DetailsRecords = DetailsList; // Programar el evento keyPress "Enter" para agregar productos a la lista 
 
-            sqlRepository.InsertNewsRegisters(record);
+                sqlRepository.InsertNewsRegisters(record);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
 
         public void DeleteFolio()
         {
-            sqlRepository.DeleteRegisters(view.Folio);
+            try
+            {
+                if (!sqlRepository.DeleteRegisters(view.Folio))
+                {
+                    throw new Exception(sqlRepository.LastError);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
 
         public void CleanFolio()
