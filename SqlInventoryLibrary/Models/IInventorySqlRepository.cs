@@ -12,8 +12,9 @@ namespace SqlInventoryLibrary.Models
         string LastError { get;  }
 
         bool InsertNewsRegisters(Record record);
-        bool DeleteRegisters(int folio);
+        bool DeleteRegisters(Record record);
         bool GetAllRegisters(ref DataTable data);
+        bool GetRegister(ref DataTable data,int folio);
         bool GetAllTransactionData(ref DataTable data, int folio);
         bool GetAllProducts(ref DataTable data);
         bool InsertProducts(Product product);

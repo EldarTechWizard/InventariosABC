@@ -33,7 +33,7 @@ namespace InventariosABC.Views.InventoryTab
         void SetDataSourceLookUpEdit(DataTable data);
         void AddNewRowDataGrid();
         void ClearAllTextBox();
-
         void ClearProducTextBox();
+        void SwicthStateMovementType(bool val);
     }
 }

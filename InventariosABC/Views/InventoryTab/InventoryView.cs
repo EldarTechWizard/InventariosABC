@@ -20,7 +20,7 @@ namespace InventariosABC.Views.InventoryTab
             AssociateAndRaiseViewEvents();
 
             dpDate.Format = DateTimePickerFormat.Custom;
-            dpDate.CustomFormat = "MM/dd/yyyy";
+            dpDate.CustomFormat = "dd/MM/yyyy";
 
         }
 
@@ -86,7 +86,21 @@ namespace InventariosABC.Views.InventoryTab
 
         public void AddNewRowDataGrid()
         {
-            DataTable data = gcRecords.DataSource as DataTable;
+
+            DataTable data = new DataTable();
+
+            if (gcRecords.DataSource == null) 
+            {
+                
+                data.Columns.Add("productId", typeof(String));
+                data.Columns.Add("description", typeof(String));
+                data.Columns.Add("quantity", typeof(double));
+                data.Columns.Add("salePrice", typeof(double));
+                data.Columns.Add("amount", typeof(double));
+                SetDataSourceDataGrid(data);
+            }
+
+            data = gcRecords.DataSource as DataTable;
             DataRow dataRow = data.NewRow();
 
             dataRow["productId"] = this.ProductId;
@@ -107,7 +121,7 @@ namespace InventariosABC.Views.InventoryTab
             tbTotal.Texts = string.Empty;
             dpDate.Text = string.Empty;
             cbMovementType.Text = string.Empty;
-            lueDescription.Text = string.Empty;
+            //lueDescription.Text = string.Empty;
         }
 
         public void ClearProducTextBox()
@@ -115,7 +129,7 @@ namespace InventariosABC.Views.InventoryTab
             tbProductId.Texts = string.Empty;
             tbQuantity.Texts = string.Empty;
             lueDescription.Text = string.Empty;
-            tbSalePrice.Texts = string.Empty;   
+            tbSalePrice.Texts = string.Empty;          
         }
 
         public void SetDataSourceLookUpEdit(DataTable data)
@@ -123,6 +137,18 @@ namespace InventariosABC.Views.InventoryTab
             lueDescription.Properties.DataSource = data;
             lueDescription.Properties.DisplayMember = "description";
             lueDescription.Properties.ValueMember = "productId";
+        }
+
+        public void SwicthStateMovementType(bool val)
+        {
+            if(val)
+            {
+                cbMovementType.ReadOnly = false;
+            }
+            else
+            {
+                cbMovementType.ReadOnly = true;
+            }
         }
     }
 }

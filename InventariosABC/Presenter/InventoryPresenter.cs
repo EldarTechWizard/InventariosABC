@@ -5,6 +5,7 @@ using SqlInventoryLibrary.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +19,9 @@ namespace InventariosABC.Presenter
         private IInventoryView view;
         private IInventorySqlRepository sqlRepository;
         private Dictionary<int,Record> records = new Dictionary<int,Record>();
-        private List<DetailsRecord> DetailsList = new List<DetailsRecord>();
+        private List<DetailsRecord> detailsList = new List<DetailsRecord>();
         private Dictionary<int,Product> productList = new Dictionary<int,Product>();
+
         public InventoryPresenter(IInventoryView view)
         {
             this.view = view;
@@ -38,7 +40,7 @@ namespace InventariosABC.Presenter
         {
             GetProducts();
             DataTable dt = new DataTable();
-            GetRecords(ref dt);
+            GetRecords();
 
             DataTable data = new DataTable();
             data.Columns.Add("productId", typeof(String));
@@ -74,23 +76,44 @@ namespace InventariosABC.Presenter
 
         public void InsertEvent(object sender, EventArgs e)
         {
-            DetailsRecord detailsRecord = new DetailsRecord();
-            Product product = new Product();
-            product.ProductID = view.ProductId;
-            product.SalePrice = view.SalesPrice;
-            product.Description = view.Description;
+            try
+            {
 
-            detailsRecord.Product = product;
-            detailsRecord.Quantity = view.Quantity;
-            detailsRecord.Amount = view.Quantity * product.SalePrice;
+                List<string> list = new List<string>() { "Entrada","Salida"};
+                if (!list.Contains(view.MovementType))
+                {
+                    throw new Exception("Error el tipo de movimiento solo puede ser entrada o salida");
+                }
 
-            view.TotalAmount += detailsRecord.Amount;
+                DetailsRecord detailsRecord = new DetailsRecord();
+                Product product = new Product();
+                product.ProductID = view.ProductId;
+                product.SalePrice = view.SalesPrice;
+                product.Description = view.Description;
 
-            DetailsList.Add(detailsRecord);
+                detailsRecord.Product = product;
+                detailsRecord.Quantity = view.Quantity;
+                detailsRecord.Amount = view.Quantity * product.SalePrice;
 
-            AddNewRowDG();
+                view.TotalAmount += detailsRecord.Amount;
 
-            view.ClearAllTextBox();
+                if (detailsList.Count == 0)
+                {
+                    view.SwicthStateMovementType(false);
+                }
+
+
+                detailsList.Add(detailsRecord);
+
+                AddNewRowDG();
+
+                view.ClearProducTextBox();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+                
         }
 
         public void KeyPressEvent(object sender, KeyEventArgs e)
@@ -102,15 +125,18 @@ namespace InventariosABC.Presenter
         }
 
 
-        public void GetRecords(ref DataTable data)
+        public void GetRecords()
         {
             try
             {
-                if(!sqlRepository.GetAllRegisters(ref data))
+                DataTable data = new DataTable();
+                if (!sqlRepository.GetAllRegisters(ref data))
                 {
                     throw new Exception(sqlRepository.LastError);
                 }
 
+
+                records.Clear();
                 foreach (DataRow row in data.Rows)
                 {
                     Record record = new Record();
@@ -175,20 +201,65 @@ namespace InventariosABC.Presenter
         {
             try
             {
-                DataTable data = new DataTable();
+                DataTable dataTransactions = new DataTable();
+                DataTable dataHeader = new DataTable();
 
-                if(!records.ContainsKey(view.Folio))
+                if (!records.ContainsKey(view.Folio))
                 {
+
+                    view.SetDataSourceDataGrid(null);
+                    view.SwicthStateMovementType(true);
+
+                    detailsList.Clear();
+
+                    view.TotalAmount = 0;
+
                     return;
                 }
 
 
-                if(!sqlRepository.GetAllTransactionData(ref data, view.Folio))
+                if(!sqlRepository.GetAllTransactionData(ref dataTransactions, view.Folio))
                 {
                     throw new Exception(sqlRepository.LastError);
                 }
 
-                view.SetDataSourceDataGrid(data);
+                if (!sqlRepository.GetRegister(ref dataHeader, view.Folio))
+                {
+                    throw new Exception(sqlRepository.LastError);
+                }
+
+                
+
+                foreach(DataRow row in dataTransactions.Rows)
+                {
+                    DetailsRecord detailsRecord = new DetailsRecord();
+                    Product product = new Product
+                    {
+                        ProductID = (int)row["productId"],
+                        Description = row["description"].ToString(),
+                        SalePrice = double.Parse(row["salePrice"].ToString())
+                    };
+
+                    product.Balance = double.Parse(productList[product.ProductID].Balance.ToString());
+
+                    detailsRecord.Quantity = int.Parse(row["quantity"].ToString()); 
+                    detailsRecord.Amount = double.Parse(row["amount"].ToString());
+                    detailsRecord.Product = product;
+
+                    detailsList.Add(detailsRecord);
+                }
+
+                
+
+
+                string date = dataHeader.Rows[0]["entryDate"].ToString();
+
+                view.Date = date.Substring(0, 10);
+                view.MovementType = dataHeader.Rows[0]["movementType"].ToString();
+                view.TotalAmount = double.Parse(dataHeader.Rows[0]["total"].ToString());
+
+                view.SetDataSourceDataGrid(dataTransactions);
+                view.SwicthStateMovementType(false);
                 view.ClearProducTextBox();
             }
             catch (Exception ex)
@@ -207,9 +278,16 @@ namespace InventariosABC.Presenter
                 record.Date = view.Date;
                 record.MovementType = view.MovementType;
                 record.Total = view.TotalAmount;
-                record.DetailsRecords = DetailsList;  
+                record.DetailsRecords = detailsList;
 
-                sqlRepository.InsertNewsRegisters(record);
+                if (!sqlRepository.InsertNewsRegisters(record))
+                {
+                    throw new Exception(sqlRepository.LastError);
+                }
+
+                GetRecords();
+
+                MessageBox.Show("Registros insertados correctamente");
             }
             catch(Exception ex)
             {
@@ -221,10 +299,25 @@ namespace InventariosABC.Presenter
         {
             try
             {
-                if (!sqlRepository.DeleteRegisters(view.Folio))
+                Record record = new Record
+                {
+                    Folio = view.Folio,
+                    Date = view.Date,
+                    MovementType = view.MovementType,
+                    Total = view.TotalAmount,
+                    DetailsRecords = detailsList
+                };
+
+                if (!sqlRepository.DeleteRegisters(record))
                 {
                     throw new Exception(sqlRepository.LastError);
                 }
+
+                view.ClearAllTextBox();
+                GetRecords();
+                view.SetDataSourceDataGrid(null);
+
+                MessageBox.Show("Folio eliminado correctamente");
             }
             catch(Exception ex)
             {
@@ -250,6 +343,7 @@ namespace InventariosABC.Presenter
         public void CleanFolio()
         {
             view.ClearAllTextBox();
+            view.SwicthStateMovementType(true);
         }
 
         

@@ -75,17 +75,17 @@
     <Compile Include="Views\InventoryTab\InventoryView.Designer.cs">
       <DependentUpon>InventoryView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProductsTab\IProductView.cs" />
+    <Compile Include="Views\ProductsCRUDTab\IProductView.cs" />
     <Compile Include="Views\MainTab\MainView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\MainTab\MainView.Designer.cs">
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProductsTab\ProductView.cs">
+    <Compile Include="Views\ProductsCRUDTab\ProductView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\ProductsTab\ProductView.Designer.cs">
+    <Compile Include="Views\ProductsCRUDTab\ProductView.Designer.cs">
       <DependentUpon>ProductView.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\licenses.licx" />
@@ -104,7 +104,7 @@
     <EmbeddedResource Include="Views\MainTab\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProductsTab\ProductView.resx">
+    <EmbeddedResource Include="Views\ProductsCRUDTab\ProductView.resx">
       <DependentUpon>ProductView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -125,6 +125,9 @@
       <Project>{3d80fd10-db80-4243-b7e2-2189057be916}</Project>
       <Name>SqlInventoryLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\ProductPickerTab\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

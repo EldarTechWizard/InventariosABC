@@ -31,9 +31,9 @@ namespace SqlInventoryLibrary.Repository
                 using(SqlConnection conn = new SqlConnection(connectionString)) 
                 using(SqlCommand cmd = conn.CreateCommand())
                 {
-                    SqlTransaction transaction = conn.BeginTransaction();
                     conn.Open();
-
+                    SqlTransaction transaction = conn.BeginTransaction();
+                    
                     try
                     {                                              
                         cmd.Transaction = transaction;
@@ -45,29 +45,33 @@ namespace SqlInventoryLibrary.Repository
                         cmd.Parameters.AddWithValue("@total", record.Total);
                         cmd.Parameters.AddWithValue("@movementType", record.MovementType);
                         cmd.ExecuteNonQuery();
-                        
+
+                        int i = 0;
                         foreach (DetailsRecord details in record.DetailsRecords)
                         {
-                            cmd.CommandText = "insert into inventoryDetails (folio, productId, quantity) values (@folio,@productId,@quantity)";
-                            cmd.Parameters.AddWithValue("@folio", record.Folio);
-                            cmd.Parameters.AddWithValue("@productId", details.Product.ProductID);
-                            cmd.Parameters.AddWithValue("@quantity", details.Quantity);
+                            cmd.CommandText = $"insert into inventoryDetails (folio, productId, quantity) values (@folio{i},@productId{i},@quantity{i})";
+                            cmd.Parameters.AddWithValue($"@folio{i}", record.Folio);
+                            cmd.Parameters.AddWithValue($"@productId{i}", details.Product.ProductID);
+                            cmd.Parameters.AddWithValue($"@quantity{i}", details.Quantity);
                             cmd.ExecuteNonQuery();
 
                             if(record.MovementType == "Entrada")
                             {
-                                details.Product.Balance += details.Amount;
-                                cmd.CommandText = "update products set balance = @balance";                                
-                                cmd.Parameters.AddWithValue("@balance",details.Product.Balance);
+                                details.Product.Balance += details.Quantity;
+                                cmd.CommandText = $"update products set balance = @balance{i} where productId = @id{i}";                                
+                                cmd.Parameters.AddWithValue($"@balance{i}",details.Product.Balance);
+                                cmd.Parameters.AddWithValue($"@id{i}", details.Product.ProductID);
                                 cmd.ExecuteNonQuery();
                             }else if(record.MovementType == "Salida")
                             {
-                                details.Product.Balance -= details.Amount;
-                                cmd.CommandText = "update products set balance = @balance";
-                                cmd.Parameters.AddWithValue("@balance", details.Product.Balance);
+                                details.Product.Balance -= details.Quantity;
+                                cmd.CommandText = $"update products set balance = @balance{i} where productId = @id{i}";
+                                cmd.Parameters.AddWithValue($"@balance{i}", details.Product.Balance);
+                                cmd.Parameters.AddWithValue($"@id{i}", details.Product.ProductID);
                                 cmd.ExecuteNonQuery();
                             }
-                          
+
+                            i++;
                         }
 
                         transaction.Commit();
@@ -89,27 +93,55 @@ namespace SqlInventoryLibrary.Repository
             }
         }
 
-        public bool DeleteRegisters(int folio)
+        public bool DeleteRegisters(Record record)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    SqlTransaction transaction = conn.BeginTransaction();
+
                     conn.Open();
+                    SqlTransaction transaction = conn.BeginTransaction();
+                   
                     try
                     {
                         cmd.Transaction = transaction;
                         cmd.Connection = conn;
 
                         cmd.CommandText = "delete from inventoryDetails where folio = @folio";
-                        cmd.Parameters.AddWithValue("@folio", folio);
+                        cmd.Parameters.AddWithValue("@folio", record.Folio);
                         cmd.ExecuteNonQuery();
 
-                        cmd.CommandText = "delete from inventory where folio = @folio";
-                        cmd.Parameters.AddWithValue("@folio", folio);
+                        cmd.CommandText = "delete from inventory where folio = @folio2";
+                        cmd.Parameters.AddWithValue("@folio2", record.Folio);
                         cmd.ExecuteNonQuery();
+
+
+
+                        int i = 0;
+                        foreach (DetailsRecord details in record.DetailsRecords)
+                        {
+                            if (record.MovementType == "Entrada")
+                            {
+                                details.Product.Balance -= details.Quantity;
+                                cmd.CommandText = $"update products set balance = @balance{i} where productId = @id{i}";
+                                cmd.Parameters.AddWithValue($"@balance{i}", details.Product.Balance);
+                                cmd.Parameters.AddWithValue($"@id{i}", details.Product.ProductID);
+                                cmd.ExecuteNonQuery();
+                            }
+                            else if (record.MovementType == "Salida")
+                            {
+                                details.Product.Balance += details.Quantity;
+                                cmd.CommandText = $"update products set balance = @balance{i} where productId = @id{i}";
+                                cmd.Parameters.AddWithValue($"@balance{i}", details.Product.Balance);
+                                cmd.Parameters.AddWithValue($"@id{i}", details.Product.ProductID);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            i++;
+                        }
+
 
                         transaction.Commit();
 
@@ -142,6 +174,30 @@ namespace SqlInventoryLibrary.Repository
                     conn.Open();
                     cmd.Connection = conn;
                     cmd.CommandText = $"Select * from inventory";
+                    data.Load(cmd.ExecuteReader());
+                }
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                lastError = ex.Message;
+                return false;
+            }
+        }
+
+        public bool GetRegister(ref DataTable data, int folio)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.Connection = conn;
+                    cmd.CommandText = $"Select * from inventory where folio = @folio";
+                    cmd.Parameters.AddWithValue("@folio", folio);
                     data.Load(cmd.ExecuteReader());
                 }
 
