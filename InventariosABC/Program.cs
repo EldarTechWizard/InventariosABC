@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using InventariosABC.Presenter;
 using InventariosABC.Views.InventoryTab;
 using InventariosABC.Views.MainTab;
+using InventariosABC.Views.ProductsTab;
+
 namespace InventariosABC
 {
     internal static class Program
@@ -20,11 +22,13 @@ namespace InventariosABC
             Application.SetCompatibleTextRenderingDefault(false);
 
 
-            IInventoryView Iview = new InventoryView();
-            new InventoryPresenter(Iview);
+            IInventoryView view = new InventoryView();
+            new InventoryPresenter(view);
 
+            //IProductView view = new ProductView();
+            //new ProductPresenter(view);
 
-            Application.Run((Form)Iview);
+            Application.Run((Form)view);
         }
     }
 }

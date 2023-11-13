@@ -28,6 +28,22 @@ namespace InventariosABC.Presenter
             this.view.ChooseEvent += ChooseEvent;
             this.view.KeyPressEvent += KeyPressEvent;
             this.view.TextChangeEvent += TextChangeEvent;
+            this.view.GetSelectedRowEvent += GetSelectedRowEvent;
+            this.view.DoubleClickRowEvent += DoubleClickRowEvent;
+        }
+
+    
+
+        public void GetSelectedRowEvent(object sender, EventArgs e)
+        {
+            view.GetSelectedRow();
+        }
+
+        public void DoubleClickRowEvent(object sender, EventArgs e)
+        {
+            view.GetSelectedRow();
+            product = productList[view.Description];
+            view.CloseForm();
         }
 
         public void LoadEvent(object sender, EventArgs e)

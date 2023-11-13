@@ -19,16 +19,15 @@ namespace InventariosABC.Views.ProductPickerTab
         event EventHandler LoadEvent;
         event KeyEventHandler KeyPressEvent;
         event EventHandler TextChangeEvent;
+        event EventHandler GetSelectedRowEvent;
+        event EventHandler DoubleClickRowEvent;
 
         void SetDataGridSource(DataTable data);
         void TextEditSource(DataTable data);
-
         void DisableFilterGrid();
-
         void CloseForm();
-
         void FilterDataGrid();
-
+        void GetSelectedRow();
 
     }
 }

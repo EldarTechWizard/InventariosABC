@@ -34,18 +34,21 @@ namespace InventariosABC.Views.ProductPickerTab
         public event KeyEventHandler KeyPressEvent;
         public event EventHandler LoadEvent;
         public event EventHandler TextChangeEvent;
+        public event EventHandler GetSelectedRowEvent;
+        public event EventHandler DoubleClickRowEvent;
 
         public void AssociateAndRaiseEvents()
         {
             btnChoose.Click += delegate { ChooseEvent?.Invoke(this, EventArgs.Empty); };
             this.Load += delegate { LoadEvent?.Invoke(this, EventArgs.Empty); };
-
-
             lueDescription.TextChanged += delegate { TextChangeEvent?.Invoke(this, EventArgs.Empty); };
             lueDescription.KeyDown += (s, e) =>
             {
                 KeyPressEvent?.Invoke(s, e);
             };
+
+            gridView1.Click += delegate { GetSelectedRowEvent?.Invoke(this, EventArgs.Empty); };
+            gridView1.DoubleClick += delegate { DoubleClickRowEvent?.Invoke(this, EventArgs.Empty); };
         }
 
         public void SetDataGridSource(DataTable data)
@@ -81,5 +84,23 @@ namespace InventariosABC.Views.ProductPickerTab
         {
             this.Close();
         }
+
+        public void GetSelectedRow()
+        {
+            foreach(int i in gridView1.GetSelectedRows())
+            {
+                DataRow row = gridView1.GetDataRow(i);
+                this.ProductId = (int)row["productId"];
+                this.Description = row["description"].ToString();
+                this.SalePrice = double.Parse(row["salePrice"].ToString());
+                this.Balance = double.Parse(row["balance"].ToString());
+            }
+        }
+
+        private void gridView1_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        {
+           
+        }
+
     }
 }

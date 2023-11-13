@@ -347,6 +347,7 @@
             // 
             this.tbProductId.Location = new System.Drawing.Point(157, 195);
             this.tbProductId.Name = "tbProductId";
+            this.tbProductId.ReadOnly = true;
             this.tbProductId.Size = new System.Drawing.Size(174, 22);
             this.tbProductId.TabIndex = 22;
             // 

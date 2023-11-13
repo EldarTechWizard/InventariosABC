@@ -17,10 +17,51 @@ namespace InventariosABC.Presenter
 
         private IProductView view;
         private IInventorySqlRepository sqlRepository;
+        private Dictionary<int, Product> products = new Dictionary<int, Product>();
         public ProductPresenter(IProductView view)
         {
             this.view = view;
             sqlRepository = new InventorySqlRepository();
+
+            this.view.LoadEvent += LoadEvent;
+            this.view.SaveEvent += SaveEvent;
+            this.view.DeleteEvent += DeleteEvent;
+            this.view.FolioChangedEvent += FolioChangedEvent;
+            this.view.GridClickEvent += GridClickEvent;
+
+
+        }
+
+        public void LoadEvent(object sender, EventArgs e)
+        {
+            GetAllProducts();
+        }
+        public void SaveEvent(object sender, EventArgs e)
+        {
+            if (view.EditMode)
+            {
+                UpdateProduct();
+            }
+            else
+            {
+                InsertNewProduct();
+            }
+           
+        }
+
+        public void DeleteEvent(object sender, EventArgs e)
+        {
+            DeleteProduct();
+        }
+
+        public void FolioChangedEvent(object sender, EventArgs e)
+        {
+            GetOneProduct();
+        }
+
+        public void GridClickEvent(object sender, EventArgs e)
+        {
+            GetSelectedRows();
         }
 
         public void GetAllProducts()
@@ -31,6 +72,17 @@ namespace InventariosABC.Presenter
                 if(!sqlRepository.GetAllProducts(ref data))
                 {
                     throw new Exception(sqlRepository.LastError);
+                }
+                
+                foreach(DataRow row in data.Rows)
+                {
+                    Product product = new Product();
+                    product.ProductID = (int)row["productId"];
+                    product.Description = row["description"].ToString();
+                    product.SalePrice = double.Parse(row["salePrice"].ToString());
+                    product.Balance = double.Parse(row["balance"].ToString());
+
+                    products[product.ProductID] = product;
                 }
 
                 view.SetDataGridSource(data);
@@ -45,19 +97,19 @@ namespace InventariosABC.Presenter
         {
             try
             {
-                Product product = new Product
+                if(products.ContainsKey(view.ProductId)) 
                 {
-                    ProductID = view.productId
-                };
+                    view.Description = products[view.ProductId].Description;
+                    view.SalePrice = products[view.ProductId].SalePrice;
+                    view.Balance = products[view.ProductId].Balance;
 
-                if(!sqlRepository.GetOneProduct(ref product))
-                {
-                    throw new Exception(sqlRepository.LastError);
+                    view.ChangeToEditMode(true);
                 }
-
-                view.description = view.description;
-                view.SalePrice = view.SalePrice;
-                view.Balance = view.Balance;
+                else
+                {
+                    view.ChangeToEditMode(false);
+                    view.ClearTextBox();
+                }
             }
             catch (Exception ex)
             {
@@ -71,13 +123,21 @@ namespace InventariosABC.Presenter
             {
                 Product product = new Product
                 {
-                    ProductID = view.productId,
-                    Description = view.description,
+                    ProductID = view.ProductId,
+                    Description = view.Description,
                     SalePrice = view.SalePrice,
                     Balance = view.Balance
                 };
 
-                sqlRepository.InsertProducts(product);
+                if (!sqlRepository.InsertProducts(product))
+                {
+                    throw new Exception(sqlRepository.LastError);
+                }
+
+                GetAllProducts();
+                view.ChangeToEditMode(true);
+
+                MessageBox.Show("Producto insertado correctamente");
             }
             catch (Exception ex)
             {
@@ -89,18 +149,21 @@ namespace InventariosABC.Presenter
         {
             try
             {
-                Product product = new Product
+                if (!products.ContainsKey(view.ProductId))
                 {
-                    ProductID = view.productId,
-                    Description = view.description,
-                    SalePrice = view.SalePrice,
-                    Balance = view.Balance
-                };
+                    throw new Exception("Porfavor escriba un id valido");
+                }
 
-                if (!sqlRepository.UpdateProducts(product))
+                products[view.ProductId].Description = view.Description;
+                products[view.ProductId].SalePrice = view.SalePrice;
+
+                if (!sqlRepository.UpdateProducts(products[view.ProductId]))
                 {
                     throw new Exception(sqlRepository.LastError);
                 }
+
+                GetAllProducts();
+                MessageBox.Show("Productos actualizado correctamente");
             }
             catch(Exception ex)
             {
@@ -112,23 +175,32 @@ namespace InventariosABC.Presenter
         {
             try
             {
-                Product product = new Product
+                if (!products.ContainsKey(view.ProductId))
                 {
-                    ProductID = view.productId
-                };
+                    throw new Exception("Porfavor escriba un id valido");
+                }
 
-                if (!sqlRepository.DeleteProduct(product.ProductID))
+                if (!sqlRepository.DeleteProduct(view.ProductId))
                 {
                     throw new Exception(sqlRepository.LastError);
                 }
 
 
                 GetAllProducts();
+                view.ClearTextBox();
+
+                MessageBox.Show("Productos eliminado correctamente");
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
             }
+        }
+
+
+        public void GetSelectedRows()
+        {
+            view.SelectedRow();
         }
     }
 }

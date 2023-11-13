@@ -10,17 +10,22 @@ namespace InventariosABC.Views.ProductsTab
 {
     public interface IProductView
     {
-        int productId { get; set; }
-        string description { get; set; }
+        int ProductId { get; set; }
+        string Description { get; set; }
         double SalePrice { get; set; }
         double Balance { get; set; }
 
+        bool EditMode {  get; set; }
+
         event EventHandler SaveEvent;
-        event EventHandler EditEvent;
+        event EventHandler DeleteEvent;
         event EventHandler FolioChangedEvent;
-        event DataGridViewCellMouseEventHandler RightClickEvent;
+        event EventHandler GridClickEvent;
+        event EventHandler LoadEvent;
 
         void SetDataGridSource(DataTable data);
-
+        void ClearTextBox();
+        void ChangeToEditMode(bool aux);
+        void SelectedRow();
     }
 }
