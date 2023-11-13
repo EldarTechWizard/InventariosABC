@@ -377,6 +377,7 @@
             this.Controls.Add(this.dpDate);
             this.Controls.Add(this.lFolio);
             this.Controls.Add(this.tbFolio);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "InventoryView";
             this.Text = "InventoryView";
             ((System.ComponentModel.ISupportInitialize)(this.lueDescription.Properties)).EndInit();

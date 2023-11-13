@@ -86,11 +86,10 @@
             // 
             // gcProducts
             // 
-            this.gcProducts.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gcProducts.Location = new System.Drawing.Point(0, 251);
+            this.gcProducts.Location = new System.Drawing.Point(0, 236);
             this.gcProducts.MainView = this.gridView1;
             this.gcProducts.Name = "gcProducts";
-            this.gcProducts.Size = new System.Drawing.Size(746, 308);
+            this.gcProducts.Size = new System.Drawing.Size(746, 311);
             this.gcProducts.TabIndex = 17;
             this.gcProducts.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -164,6 +163,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ProductView";
             this.Text = "ProductView";
             ((System.ComponentModel.ISupportInitialize)(this.gcProducts)).EndInit();

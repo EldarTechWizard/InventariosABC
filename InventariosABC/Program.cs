@@ -22,11 +22,14 @@ namespace InventariosABC
             Application.SetCompatibleTextRenderingDefault(false);
 
 
-            IInventoryView view = new InventoryView();
-            new InventoryPresenter(view);
+            //IInventoryView view = new InventoryView();
+            //new InventoryPresenter(view);
 
             //IProductView view = new ProductView();
             //new ProductPresenter(view);
+
+            IMainView view = new MainView();
+            new MainPresenter(view);
 
             Application.Run((Form)view);
         }
