@@ -57,6 +57,7 @@ namespace SqlInventoryLibrary.Repository
 
                             if(record.MovementType == "Entrada")
                             {
+
                                 details.Product.Balance += details.Quantity;
                                 cmd.CommandText = $"update products set balance = @balance{i} where productId = @id{i}";                                
                                 cmd.Parameters.AddWithValue($"@balance{i}",details.Product.Balance);

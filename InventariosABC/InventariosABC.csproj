@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Presenter\InventoryPresenter.cs" />
     <Compile Include="Presenter\MainPresenter.cs" />
+    <Compile Include="Presenter\ProductPickerPresenter.cs" />
     <Compile Include="Presenter\ProductPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +75,13 @@
     </Compile>
     <Compile Include="Views\InventoryTab\InventoryView.Designer.cs">
       <DependentUpon>InventoryView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductPickerTab\IProductPickerView.cs" />
+    <Compile Include="Views\ProductPickerTab\ProductPickerView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ProductPickerTab\ProductPickerView.Designer.cs">
+      <DependentUpon>ProductPickerView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductsCRUDTab\IProductView.cs" />
     <Compile Include="Views\MainTab\MainView.cs">
@@ -104,6 +112,9 @@
     <EmbeddedResource Include="Views\MainTab\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\ProductPickerTab\ProductPickerView.resx">
+      <DependentUpon>ProductPickerView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ProductsCRUDTab\ProductView.resx">
       <DependentUpon>ProductView.cs</DependentUpon>
     </EmbeddedResource>
@@ -126,8 +137,6 @@
       <Name>SqlInventoryLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\ProductPickerTab\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

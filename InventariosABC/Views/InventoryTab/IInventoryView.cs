@@ -26,14 +26,18 @@ namespace InventariosABC.Views.InventoryTab
         event EventHandler DeleteEvent;
         event EventHandler ClearEvent;
         event EventHandler FolioChangedEvent;
-        event KeyEventHandler KeyPressEvent;
+        event KeyEventHandler KeyDownEvent;
+        event KeyPressEventHandler KeyReleaseEvent;
         event EventHandler InsertEvent;
         event EventHandler DescriptionChanged;
         void SetDataSourceDataGrid(DataTable data);
         void SetDataSourceLookUpEdit(DataTable data);
         void AddNewRowDataGrid();
+        void UpdateProductQuantity();
         void ClearAllTextBox();
         void ClearProducTextBox();
+        void ClearIdTextBox();
+
         void SwicthStateMovementType(bool val);
     }
 }

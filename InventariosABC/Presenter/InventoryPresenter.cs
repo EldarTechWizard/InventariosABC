@@ -1,5 +1,6 @@
 ﻿using InventariosABC.Views.InventoryTab;
 using InventariosABC.Views.MainTab;
+using InventariosABC.Views.ProductPickerTab;
 using SqlInventoryLibrary.Models;
 using SqlInventoryLibrary.Repository;
 using System;
@@ -21,6 +22,7 @@ namespace InventariosABC.Presenter
         private Dictionary<int,Record> records = new Dictionary<int,Record>();
         private List<DetailsRecord> detailsList = new List<DetailsRecord>();
         private Dictionary<int,Product> productList = new Dictionary<int,Product>();
+  
 
         public InventoryPresenter(IInventoryView view)
         {
@@ -30,7 +32,8 @@ namespace InventariosABC.Presenter
             this.view.DeleteEvent += this.DeleteEvent;
             this.view.ClearEvent += this.ClearEvent;
             this.view.FolioChangedEvent += this.FolioChangedEvent;
-            this.view.KeyPressEvent += this.KeyPressEvent;
+            this.view.KeyDownEvent += this.KeyDownEvent;
+            //this.view.KeyReleaseEvent += this.KeyPressEvent;
             this.view.LoadEvent += this.LoadEvent;
             this.view.DescriptionChanged += this.DescriptionChanged;
             this.view.InsertEvent += this.InsertEvent;
@@ -38,6 +41,8 @@ namespace InventariosABC.Presenter
 
         public void LoadEvent(object sender, EventArgs e)
         {
+            
+
             GetProducts();
             DataTable dt = new DataTable();
             GetRecords();
@@ -84,18 +89,50 @@ namespace InventariosABC.Presenter
                 {
                     throw new Exception("Error el tipo de movimiento solo puede ser entrada o salida");
                 }
-
-                DetailsRecord detailsRecord = new DetailsRecord();
+               
                 Product product = new Product();
                 product.ProductID = view.ProductId;
                 product.SalePrice = view.SalesPrice;
                 product.Description = view.Description;
+                product.Balance = view.Balance;
 
-                detailsRecord.Product = product;
-                detailsRecord.Quantity = view.Quantity;
-                detailsRecord.Amount = view.Quantity * product.SalePrice;
+                if (view.MovementType == "Salida")
+                {
+                    double newQuantity = productList[product.ProductID].Balance - view.Quantity;
 
-                view.TotalAmount += detailsRecord.Amount;
+                    if(newQuantity < 0)
+                    {
+                        throw new Exception("La cantidad no puede ser mayor al numero de articulos restantes del producto");
+                    }
+                    else
+                    {
+                        productList[product.ProductID].Balance = newQuantity;
+                    }
+                }
+
+                bool isProductAlready = false;
+                foreach (DetailsRecord details in detailsList)
+                {
+                    if (details.Product.ProductID == view.ProductId)
+                    {
+                        view.UpdateProductQuantity();
+                        details.Quantity += view.Quantity;
+                        details.Amount += (view.SalesPrice * view.Quantity);
+
+                        isProductAlready = true;
+                    }
+                }
+
+                DetailsRecord detailsRecord = new DetailsRecord
+                {
+                    Product = product,
+
+                    Quantity = view.Quantity,
+
+                    Amount = view.Quantity * product.SalePrice
+                };
+
+                view.TotalAmount += view.Quantity * product.SalePrice;
 
                 if (detailsList.Count == 0)
                 {
@@ -103,10 +140,13 @@ namespace InventariosABC.Presenter
                 }
 
 
-                detailsList.Add(detailsRecord);
 
-                AddNewRowDG();
-
+                if (!isProductAlready)
+                {
+                    detailsList.Add(detailsRecord);
+                    AddNewRowDG();
+                }
+                
                 view.ClearProducTextBox();
             }
             catch(Exception ex)
@@ -116,12 +156,40 @@ namespace InventariosABC.Presenter
                 
         }
 
-        public void KeyPressEvent(object sender, KeyEventArgs e)
+        //Reemplazar por key press
+        public void KeyDownEvent(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+         
+            if (e.KeyCode == Keys.Enter)
             {
                 
             }
+
+            if (e.KeyCode == Keys.F1)
+            {
+                IProductPickerView IviewPP = new ProductPickerView();
+                ProductPickerPresenter pickerPresenter = new ProductPickerPresenter(IviewPP);
+
+                Form productPicker = (Form)IviewPP;
+                productPicker.ShowDialog();
+
+
+                Product product = pickerPresenter.GetResources();
+                if (product != null)
+                {
+                    view.ProductId = product.ProductID;
+                    view.Description = product.Description;
+                    view.SalesPrice = product.SalePrice;
+                    view.Balance = product.Balance;
+                }
+            }
+
+                       
+        }
+
+        public void KeyPressEvent(object sender, KeyPressEventArgs e)
+        {
+            MessageBox.Show(e.KeyChar.ToString());
         }
 
 
@@ -165,6 +233,8 @@ namespace InventariosABC.Presenter
                 {
                     throw new Exception(sqlRepository.LastError);
                 }
+
+                productList.Clear();
 
                 foreach (DataRow row in dataTable.Rows)
                 {
@@ -286,6 +356,8 @@ namespace InventariosABC.Presenter
                 }
 
                 GetRecords();
+                GetProducts();
+
 
                 MessageBox.Show("Registros insertados correctamente");
             }
@@ -308,13 +380,15 @@ namespace InventariosABC.Presenter
                     DetailsRecords = detailsList
                 };
 
-                if (!sqlRepository.DeleteRegisters(record))
+                   if (!sqlRepository.DeleteRegisters(record))
                 {
                     throw new Exception(sqlRepository.LastError);
                 }
 
                 view.ClearAllTextBox();
                 GetRecords();
+                GetProducts();
+                detailsList.Clear();
                 view.SetDataSourceDataGrid(null);
 
                 MessageBox.Show("Folio eliminado correctamente");
@@ -333,6 +407,7 @@ namespace InventariosABC.Presenter
                 view.ProductId = product.ProductID;
                 view.SalesPrice = product.SalePrice;
                 view.Balance = product.Balance;
+               
             }
             catch (Exception ex)
             {

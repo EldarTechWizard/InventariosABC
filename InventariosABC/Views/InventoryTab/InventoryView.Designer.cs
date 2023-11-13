@@ -34,7 +34,6 @@
             this.lDate = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.tbProductId = new CustomControls.RJControls.RJTextBox();
             this.lueDescription = new DevExpress.XtraEditors.LookUpEdit();
             this.label3 = new System.Windows.Forms.Label();
             this.tbQuantity = new CustomControls.RJControls.RJTextBox();
@@ -50,6 +49,7 @@
             this.btnDelete = new CustomControls.RJControls.RJButton();
             this.cbMovementType = new DevExpress.XtraEditors.ComboBoxEdit();
             this.btnInsert = new CustomControls.RJControls.RJButton();
+            this.tbProductId = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.lueDescription.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gcRecords)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
@@ -126,29 +126,6 @@
             this.label1.Size = new System.Drawing.Size(64, 16);
             this.label1.TabIndex = 6;
             this.label1.Text = "Producto:";
-            // 
-            // tbProductId
-            // 
-            this.tbProductId.BackColor = System.Drawing.SystemColors.Window;
-            this.tbProductId.BorderColor = System.Drawing.Color.MediumSlateBlue;
-            this.tbProductId.BorderFocusColor = System.Drawing.Color.HotPink;
-            this.tbProductId.BorderRadius = 0;
-            this.tbProductId.BorderSize = 2;
-            this.tbProductId.Enabled = false;
-            this.tbProductId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbProductId.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tbProductId.Location = new System.Drawing.Point(157, 186);
-            this.tbProductId.Margin = new System.Windows.Forms.Padding(4);
-            this.tbProductId.Multiline = false;
-            this.tbProductId.Name = "tbProductId";
-            this.tbProductId.Padding = new System.Windows.Forms.Padding(10, 7, 10, 7);
-            this.tbProductId.PasswordChar = false;
-            this.tbProductId.PlaceholderColor = System.Drawing.Color.DarkGray;
-            this.tbProductId.PlaceholderText = "";
-            this.tbProductId.Size = new System.Drawing.Size(176, 35);
-            this.tbProductId.TabIndex = 7;
-            this.tbProductId.Texts = "";
-            this.tbProductId.UnderlinedStyle = false;
             // 
             // lueDescription
             // 
@@ -247,6 +224,7 @@
             // 
             this.gridView1.GridControl = this.gcRecords;
             this.gridView1.Name = "gridView1";
+            this.gridView1.OptionsBehavior.ReadOnly = true;
             this.gridView1.OptionsView.ShowGroupPanel = false;
             // 
             // btnSave
@@ -365,11 +343,19 @@
             this.btnInsert.TextColor = System.Drawing.Color.White;
             this.btnInsert.UseVisualStyleBackColor = false;
             // 
+            // tbProductId
+            // 
+            this.tbProductId.Location = new System.Drawing.Point(157, 195);
+            this.tbProductId.Name = "tbProductId";
+            this.tbProductId.Size = new System.Drawing.Size(174, 22);
+            this.tbProductId.TabIndex = 22;
+            // 
             // InventoryView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(787, 746);
+            this.Controls.Add(this.tbProductId);
             this.Controls.Add(this.btnInsert);
             this.Controls.Add(this.cbMovementType);
             this.Controls.Add(this.btnDelete);
@@ -384,7 +370,6 @@
             this.Controls.Add(this.tbQuantity);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lueDescription);
-            this.Controls.Add(this.tbProductId);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lDate);
@@ -410,7 +395,6 @@
         private System.Windows.Forms.Label lDate;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private CustomControls.RJControls.RJTextBox tbProductId;
         private DevExpress.XtraEditors.LookUpEdit lueDescription;
         private System.Windows.Forms.Label label3;
         private CustomControls.RJControls.RJTextBox tbQuantity;
@@ -426,5 +410,6 @@
         private CustomControls.RJControls.RJButton btnDelete;
         private DevExpress.XtraEditors.ComboBoxEdit cbMovementType;
         private CustomControls.RJControls.RJButton btnInsert;
+        private System.Windows.Forms.TextBox tbProductId;
     }
 }

@@ -21,6 +21,7 @@ namespace InventariosABC.Views.InventoryTab
 
             dpDate.Format = DateTimePickerFormat.Custom;
             dpDate.CustomFormat = "dd/MM/yyyy";
+            this.KeyPreview = true;
 
         }
 
@@ -32,12 +33,18 @@ namespace InventariosABC.Views.InventoryTab
             Load += delegate { LoadEvent?.Invoke(this, EventArgs.Empty); };
 
             tbFolio._TextChanged += delegate { FolioChangedEvent?.Invoke(this, EventArgs.Empty); };
+            
             lueDescription.EditValueChanged += delegate { DescriptionChanged?.Invoke(this, EventArgs.Empty); };
 
-            this.KeyDown += (s, e) =>
+            tbProductId.KeyDown += (s, e) =>
             {
-                KeyPressEvent?.Invoke(s, e);
+                KeyDownEvent?.Invoke(s, e);
             };
+
+            //tbProductId.KeyPress += (s, e) =>
+            //{
+            //    KeyReleaseEvent?.Invoke(s, e);
+            //};
 
             btnInsert.Click += delegate { InsertEvent?.Invoke(this, EventArgs.Empty); };
         }
@@ -62,7 +69,7 @@ namespace InventariosABC.Views.InventoryTab
 
         public string Date { get => dpDate.Text; set => dpDate.Text = value;}
         public string MovementType { get => cbMovementType.Text; set => cbMovementType.Text = value; }
-        public int ProductId { get => int.Parse(tbProductId.Texts); set => tbProductId.Texts = value.ToString(); }
+        public int ProductId { get => int.Parse(tbProductId.Text); set => tbProductId.Text = value.ToString(); }
         public string Description { get => lueDescription.Text; set => lueDescription.Text = value; }
         public int Quantity { get => int.Parse(tbQuantity.Texts); set => tbQuantity.Texts = value.ToString(); }
         public double SalesPrice { get => double.Parse(tbSalePrice.Texts); set => tbSalePrice.Texts = value.ToString(); }
@@ -74,10 +81,11 @@ namespace InventariosABC.Views.InventoryTab
         public event EventHandler DeleteEvent;
         public event EventHandler ClearEvent;
         public event EventHandler FolioChangedEvent;
-        public event KeyEventHandler KeyPressEvent;
+        public event KeyEventHandler KeyDownEvent;
         public event EventHandler LoadEvent;
         public event EventHandler DescriptionChanged;
         public event EventHandler InsertEvent;
+        public event KeyPressEventHandler KeyReleaseEvent;
 
         public void SetDataSourceDataGrid(DataTable data)
         {
@@ -126,10 +134,15 @@ namespace InventariosABC.Views.InventoryTab
 
         public void ClearProducTextBox()
         {
-            tbProductId.Texts = string.Empty;
+            tbProductId.Text = string.Empty;
             tbQuantity.Texts = string.Empty;
             lueDescription.Text = string.Empty;
             tbSalePrice.Texts = string.Empty;          
+        }
+
+        public void ClearIdTextBox()
+        {
+            tbProductId.Text = string.Empty;
         }
 
         public void SetDataSourceLookUpEdit(DataTable data)
@@ -150,5 +163,21 @@ namespace InventariosABC.Views.InventoryTab
                 cbMovementType.ReadOnly = true;
             }
         }
+
+        public void UpdateProductQuantity()
+        {
+            DataTable data = new DataTable();
+            data = gcRecords.DataSource as DataTable;
+
+            foreach(DataRow row in data.Rows)
+            {
+                if (row["productId"].ToString() == this.ProductId.ToString())
+                {
+                    row["quantity"] = int.Parse(row["quantity"].ToString()) + this.Quantity;
+                    row["amount"] = double.Parse(row["amount"].ToString()) + (this.Quantity * this.SalesPrice);
+                }
+            }
+        }
+
     }
 }
