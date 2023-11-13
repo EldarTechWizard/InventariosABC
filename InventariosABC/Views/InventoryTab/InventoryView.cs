@@ -32,7 +32,7 @@ namespace InventariosABC.Views.InventoryTab
             btnClear.Click += delegate { ClearEvent?.Invoke(this, EventArgs.Empty); };
             Load += delegate { LoadEvent?.Invoke(this, EventArgs.Empty); };
 
-            tbFolio._TextChanged += delegate { FolioChangedEvent?.Invoke(this, EventArgs.Empty); };
+            tbFolio.TextChanged += delegate { FolioChangedEvent?.Invoke(this, EventArgs.Empty); };
             
             lueDescription.EditValueChanged += delegate { DescriptionChanged?.Invoke(this, EventArgs.Empty); };
 
@@ -57,23 +57,23 @@ namespace InventariosABC.Views.InventoryTab
             get  {
                 int result = 0;
 
-                if (int.TryParse(tbFolio.Texts,out result))
+                if (int.TryParse(tbFolio.Text,out result))
                 {
                     return result;
                 }
 
                 return 0;          
             
-            } set => tbFolio.Texts = value.ToString(); 
+            } set => tbFolio.Text = value.ToString(); 
         }
 
         public string Date { get => dpDate.Text; set => dpDate.Text = value;}
         public string MovementType { get => cbMovementType.Text; set => cbMovementType.Text = value; }
         public int ProductId { get => int.Parse(tbProductId.Text); set => tbProductId.Text = value.ToString(); }
         public string Description { get => lueDescription.Text; set => lueDescription.Text = value; }
-        public int Quantity { get => int.Parse(tbQuantity.Texts); set => tbQuantity.Texts = value.ToString(); }
-        public double SalesPrice { get => double.Parse(tbSalePrice.Texts); set => tbSalePrice.Texts = value.ToString(); }
-        public double TotalAmount { get => double.Parse(tbTotal.Texts); set => tbTotal.Texts = value.ToString(); }
+        public int Quantity { get => int.Parse(tbQuantity.Text  ); set => tbQuantity.Text = value.ToString(); }
+        public double SalesPrice { get => double.Parse(tbSalePrice.Text); set => tbSalePrice.Text = value.ToString(); }
+        public double TotalAmount { get => double.Parse(tbTotal.Text); set => tbTotal.Text = value.ToString(); }
         public string EditValue { get => lueDescription.EditValue.ToString(); set => lueDescription.EditValue = value; }
         public double Balance { get => balance; set => balance = value; }
 
@@ -122,11 +122,11 @@ namespace InventariosABC.Views.InventoryTab
 
         public void ClearAllTextBox()
         {
-            tbFolio.Texts = string.Empty;
+            tbFolio.Text = string.Empty;
             tbProductId.Text = string.Empty;
-            tbQuantity.Texts = string.Empty;
-            tbSalePrice.Texts = string.Empty;
-            tbTotal.Texts = string.Empty;
+            tbQuantity.Text = string.Empty;
+            tbSalePrice.Text = string.Empty;
+            tbTotal.Text = string.Empty;
             dpDate.Text = string.Empty;
             cbMovementType.Text = string.Empty;
             //lueDescription.Text = string.Empty;
@@ -135,9 +135,9 @@ namespace InventariosABC.Views.InventoryTab
         public void ClearProducTextBox()
         {
             tbProductId.Text = string.Empty;
-            tbQuantity.Texts = string.Empty;
+            tbQuantity.Text = string.Empty;
             lueDescription.Text = string.Empty;
-            tbSalePrice.Texts = string.Empty;          
+            tbSalePrice.Text = string.Empty;          
         }
 
         public void ClearIdTextBox()
@@ -179,5 +179,14 @@ namespace InventariosABC.Views.InventoryTab
             }
         }
 
+        private void textEdit1_EditValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
