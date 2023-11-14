@@ -1,4 +1,5 @@
-﻿using InventariosABC.Views.MainTab;
+﻿using DevExpress.XtraGrid.Views.Grid;
+using InventariosABC.Views.MainTab;
 using InventariosABC.Views.ProductsTab;
 using SqlInventoryLibrary.Models;
 using SqlInventoryLibrary.Repository;
@@ -28,7 +29,7 @@ namespace InventariosABC.Presenter
             this.view.DeleteEvent += DeleteEvent;
             this.view.FolioChangedEvent += FolioChangedEvent;
             this.view.GridClickEvent += GridClickEvent;
-
+            this.view.RightClickRowEvent += RightClickEvent;
 
         }
 
@@ -49,6 +50,14 @@ namespace InventariosABC.Presenter
            
         }
 
+        public void RightClickEvent(object sender, RowCellClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {                          
+                GetSelectedRows();
+                DeleteProduct();             
+            }
+        }
         public void DeleteEvent(object sender, EventArgs e)
         {
             DeleteProduct();
@@ -178,6 +187,12 @@ namespace InventariosABC.Presenter
                 if (!products.ContainsKey(view.ProductId))
                 {
                     throw new Exception("Porfavor escriba un id valido");
+                }
+
+                DialogResult dialogResult = MessageBox.Show("Deshacer registro?", "Deshacer Registro", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.No)
+                {
+                    return;
                 }
 
                 if (!sqlRepository.DeleteProduct(view.ProductId))

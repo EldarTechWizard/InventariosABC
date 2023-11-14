@@ -1,4 +1,5 @@
-﻿using InventariosABC.Views.InventoryTab;
+﻿using DevExpress.XtraGrid.Views.Grid;
+using InventariosABC.Views.InventoryTab;
 using InventariosABC.Views.MainTab;
 using InventariosABC.Views.ProductPickerTab;
 using SqlInventoryLibrary.Models;
@@ -22,6 +23,7 @@ namespace InventariosABC.Presenter
         private Dictionary<int,Record> records = new Dictionary<int,Record>();
         private List<DetailsRecord> detailsList = new List<DetailsRecord>();
         private Dictionary<int,Product> productList = new Dictionary<int,Product>();
+        private int maxFolio = 0;
   
 
         public InventoryPresenter(IInventoryView view)
@@ -37,15 +39,40 @@ namespace InventariosABC.Presenter
             this.view.LoadEvent += this.LoadEvent;
             this.view.DescriptionChanged += this.DescriptionChanged;
             this.view.InsertEvent += this.InsertEvent;
+            this.view.RightClickRowEvent += this.RightClickRowEvent;
+        }
+
+        private void RightClickRowEvent(object sender, RowCellClickEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                DialogResult dialogResult = MessageBox.Show("Deshacer registro?", "Deshacer Registro", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    int index = 0;
+                    view.DeleteRowIndex(ref index);
+
+                    int i = 0;
+                    foreach(DetailsRecord details in detailsList)
+                    {
+                        if(details.Product.ProductID == index)
+                        {
+                            break;
+                        }
+                        i++;
+                    }
+
+                    detailsList.RemoveAt(i);
+                }
+            }
         }
 
         public void LoadEvent(object sender, EventArgs e)
         {
             
-
             GetProducts();
-            DataTable dt = new DataTable();
             GetRecords();
+            SetMaxFolio();
 
             DataTable data = new DataTable();
             data.Columns.Add("productId", typeof(String));
@@ -89,7 +116,12 @@ namespace InventariosABC.Presenter
                 {
                     throw new Exception("Error el tipo de movimiento solo puede ser entrada o salida");
                 }
-               
+
+                if (view.Quantity == 0)
+                {
+                    throw new Exception("Error la cantidad de producto debe ser mayor a 0");
+                }
+
                 Product product = new Product();
                 product.ProductID = view.ProductId;
                 product.SalePrice = view.SalesPrice;
@@ -147,7 +179,7 @@ namespace InventariosABC.Presenter
                     AddNewRowDG();
                 }
                 
-                view.ClearProducTextBox();
+                //view.ClearProducTextBox();
             }
             catch(Exception ex)
             {
@@ -156,14 +188,9 @@ namespace InventariosABC.Presenter
                 
         }
 
-        //Reemplazar por key press
         public void KeyDownEvent(object sender, KeyEventArgs e)
         {
-         
-            if (e.KeyCode == Keys.Enter)
-            {
-                
-            }
+                    
 
             if (e.KeyCode == Keys.F1)
             {
@@ -279,6 +306,7 @@ namespace InventariosABC.Presenter
 
                     view.SetDataSourceDataGrid(null);
                     view.SwicthStateMovementType(true);
+                    view.ChangeToReadOnlyMode(false);
 
                     detailsList.Clear();
 
@@ -319,8 +347,6 @@ namespace InventariosABC.Presenter
                     detailsList.Add(detailsRecord);
                 }
 
-                
-
 
                 string date = dataHeader.Rows[0]["entryDate"].ToString();
 
@@ -331,6 +357,7 @@ namespace InventariosABC.Presenter
                 view.SetDataSourceDataGrid(dataTransactions);
                 view.SwicthStateMovementType(false);
                 view.ClearProducTextBox();
+                view.ChangeToReadOnlyMode(true);
             }
             catch (Exception ex)
             {
@@ -350,14 +377,29 @@ namespace InventariosABC.Presenter
                 record.Total = view.TotalAmount;
                 record.DetailsRecords = detailsList;
 
+                if(view.Folio == 0)
+                {
+                    throw new Exception("El folio debe ser un numero entero mayor a 0");
+                }
+
+                if(detailsList.Count == 0) 
+                {
+                    throw new Exception("No puede haber transacciones vacias");
+                }
+
                 if (!sqlRepository.InsertNewsRegisters(record))
                 {
                     throw new Exception(sqlRepository.LastError);
                 }
 
+
+                view.ClearAllTextBox();
+
                 GetRecords();
                 GetProducts();
+                SetMaxFolio();
 
+                
 
                 MessageBox.Show("Registros insertados correctamente");
             }
@@ -380,7 +422,18 @@ namespace InventariosABC.Presenter
                     DetailsRecords = detailsList
                 };
 
-                   if (!sqlRepository.DeleteRegisters(record))
+                if(view.Folio == 0)
+                {
+                    throw new Exception("Debe llenar el folio con un numero valido");
+                }
+
+                DialogResult dialogResult = MessageBox.Show("Desea eliminar este registro?", "Eliminar Registro", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.No)
+                {
+                    return;
+                }
+
+                if (!sqlRepository.DeleteRegisters(record))
                 {
                     throw new Exception(sqlRepository.LastError);
                 }
@@ -421,6 +474,24 @@ namespace InventariosABC.Presenter
             view.SwicthStateMovementType(true);
         }
 
-        
+        public void SetMaxFolio()
+        {
+            try
+            {
+                if(!sqlRepository.GetMaxFolio(ref maxFolio))
+                {
+                    throw new Exception(sqlRepository.LastError);
+                }
+
+                maxFolio++;
+
+                view.Folio = maxFolio;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
     }
 }

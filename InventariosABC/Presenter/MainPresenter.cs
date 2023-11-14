@@ -13,14 +13,12 @@ namespace InventariosABC.Presenter
     public class MainPresenter
     {
         private IMainView view;
-        private IInventorySqlRepository sqlRepository;
         public MainPresenter(IMainView view) 
         { 
             this.view = view;
             this.view.openTab += openTab;
             this.view.loadEvent += loadEvent;
-        
-            sqlRepository = new InventorySqlRepository();
+                 
         }
 
         public void loadEvent(object sender, EventArgs e)
@@ -41,9 +39,5 @@ namespace InventariosABC.Presenter
             
         }
 
-        //public void openProductTab(object sender, EventArgs e)
-        //{
-        //    view.ShowProductInstance();
-        //}
     }
 }

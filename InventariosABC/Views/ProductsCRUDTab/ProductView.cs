@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.XtraGrid.Views.Grid;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -40,6 +41,7 @@ namespace InventariosABC.Views.ProductsTab
         public event EventHandler DeleteEvent;
         public event EventHandler FolioChangedEvent;
         public event EventHandler GridClickEvent;
+        public event RowCellClickEventHandler RightClickRowEvent;
 
         private void AssociateAndRaiseEvents()
         {
@@ -48,6 +50,10 @@ namespace InventariosABC.Views.ProductsTab
             btnDelete.Click += delegate { DeleteEvent?.Invoke(this, EventArgs.Empty); };
             tbProductId.TextChanged += delegate { FolioChangedEvent?.Invoke(this, EventArgs.Empty); };
             gridView1.Click += delegate { GridClickEvent?.Invoke(this, EventArgs.Empty); };
+            gridView1.RowCellClick += (s, e) =>
+            {
+                RightClickRowEvent?.Invoke(s, e);
+            };
         }
         public void ChangeToEditMode(bool aux)
         {
@@ -67,7 +73,7 @@ namespace InventariosABC.Views.ProductsTab
         {
             tbDescription.Text = string.Empty;
             tbBalance.Text = "0";
-            tbSalePrice.Text = string.Empty;
+            tbSalePrice.Text = "0";
         }
 
         public void SelectedRow()
@@ -85,6 +91,14 @@ namespace InventariosABC.Views.ProductsTab
         public void SetDataGridSource(DataTable data)
         {
            gcProducts.DataSource = data;
+        }
+
+        public void SelectedRowIndex(ref int Index)
+        {
+            foreach (int i in gridView1.GetSelectedRows())
+            {
+                Index = i;
+            }
         }
     }
 }

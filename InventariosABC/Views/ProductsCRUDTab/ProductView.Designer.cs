@@ -106,13 +106,26 @@
             // 
             this.tbProductId.Location = new System.Drawing.Point(133, 48);
             this.tbProductId.Name = "tbProductId";
+            this.tbProductId.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.RegExpMaskManager));
+            this.tbProductId.Properties.MaskSettings.Set("MaskManagerSignature", "isOptimistic=False");
+            this.tbProductId.Properties.MaskSettings.Set("mask", "\\d+");
+            this.tbProductId.Properties.MaskSettings.Set("placeholder", '\0');
+            this.tbProductId.Properties.MaskSettings.Set("allowBlankInput", true);
             this.tbProductId.Size = new System.Drawing.Size(179, 22);
             this.tbProductId.TabIndex = 19;
             // 
             // tbSalePrice
             // 
+            this.tbSalePrice.EditValue = "0";
             this.tbSalePrice.Location = new System.Drawing.Point(133, 113);
             this.tbSalePrice.Name = "tbSalePrice";
+            this.tbSalePrice.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.RegExpMaskManager));
+            this.tbSalePrice.Properties.MaskSettings.Set("MaskManagerSignature", "isOptimistic=False");
+            this.tbSalePrice.Properties.MaskSettings.Set("mask", "\\d+(\\R.\\d{0,2})?");
+            this.tbSalePrice.Properties.MaskSettings.Set("allowBlankInput", false);
+            this.tbSalePrice.Properties.MaskSettings.Set("placeholder", '\0');
+            this.tbSalePrice.Properties.MaskSettings.Set("showPlaceholders", false);
+            this.tbSalePrice.Properties.MaskSettings.Set("culture", "");
             this.tbSalePrice.Size = new System.Drawing.Size(179, 22);
             this.tbSalePrice.TabIndex = 20;
             // 
@@ -127,7 +140,13 @@
             // 
             this.tbBalance.Location = new System.Drawing.Point(452, 109);
             this.tbBalance.Name = "tbBalance";
+            this.tbBalance.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.RegExpMaskManager));
+            this.tbBalance.Properties.MaskSettings.Set("MaskManagerSignature", "isOptimistic=False");
+            this.tbBalance.Properties.MaskSettings.Set("mask", "\\d+");
+            this.tbBalance.Properties.MaskSettings.Set("placeholder", '\0');
+            this.tbBalance.Properties.MaskSettings.Set("allowBlankInput", false);
             this.tbBalance.Properties.ReadOnly = true;
+            this.tbBalance.Properties.UseMaskAsDisplayFormat = true;
             this.tbBalance.Size = new System.Drawing.Size(250, 22);
             this.tbBalance.TabIndex = 22;
             // 

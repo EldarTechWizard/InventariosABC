@@ -359,5 +359,30 @@ namespace SqlInventoryLibrary.Repository
                 return false;
             }
         }
+
+        public bool GetMaxFolio(ref int maxFolio)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.Connection = conn;
+                    cmd.CommandText = "select Max(Folio) FROM inventory";
+                    cmd.CommandTimeout = 120;                  
+                    dt.Load(cmd.ExecuteReader());
+
+                    maxFolio = (int)dt.Rows[0][0];
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                lastError = ex.Message;
+                return false;
+            }
+        }
     }
 }

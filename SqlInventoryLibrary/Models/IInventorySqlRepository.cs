@@ -22,5 +22,7 @@ namespace SqlInventoryLibrary.Models
         bool UpdateProducts(Product product);
         bool GetOneProduct(ref Product product);
 
+        bool GetMaxFolio(ref int maxFolio);
+
     }
 }

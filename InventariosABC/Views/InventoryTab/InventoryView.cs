@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraGrid.Views.Grid;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -46,12 +47,19 @@ namespace InventariosABC.Views.InventoryTab
             //    KeyReleaseEvent?.Invoke(s, e);
             //};
 
+       
+            gridView1.RowCellClick += (s, e) =>
+            {
+                RightClickRowEvent?.Invoke(s, e);
+            };
+
             btnInsert.Click += delegate { InsertEvent?.Invoke(this, EventArgs.Empty); };
         }
 
 
 
         private double balance = 0;
+        private bool folioExits = false;
 
         public int Folio { 
             get  {
@@ -76,6 +84,7 @@ namespace InventariosABC.Views.InventoryTab
         public double TotalAmount { get => double.Parse(tbTotal.Text); set => tbTotal.Text = value.ToString(); }
         public string EditValue { get => lueDescription.EditValue.ToString(); set => lueDescription.EditValue = value; }
         public double Balance { get => balance; set => balance = value; }
+        public bool FolioExist { get => folioExits; set => folioExits = value; }
 
         public event EventHandler SaveEvent;
         public event EventHandler DeleteEvent;
@@ -86,6 +95,7 @@ namespace InventariosABC.Views.InventoryTab
         public event EventHandler DescriptionChanged;
         public event EventHandler InsertEvent;
         public event KeyPressEventHandler KeyReleaseEvent;
+        public event RowCellClickEventHandler RightClickRowEvent;
 
         public void SetDataSourceDataGrid(DataTable data)
         {
@@ -124,7 +134,7 @@ namespace InventariosABC.Views.InventoryTab
         {
             tbFolio.Text = string.Empty;
             tbProductId.Text = string.Empty;
-            tbQuantity.Text = string.Empty;
+            tbQuantity.Text = "1";
             tbSalePrice.Text = string.Empty;
             tbTotal.Text = string.Empty;
             dpDate.Text = string.Empty;
@@ -135,7 +145,7 @@ namespace InventariosABC.Views.InventoryTab
         public void ClearProducTextBox()
         {
             tbProductId.Text = string.Empty;
-            tbQuantity.Text = string.Empty;
+            tbQuantity.Text = "1";
             lueDescription.Text = string.Empty;
             tbSalePrice.Text = string.Empty;          
         }
@@ -179,14 +189,35 @@ namespace InventariosABC.Views.InventoryTab
             }
         }
 
-        private void textEdit1_EditValueChanged(object sender, EventArgs e)
+        public void DeleteRowIndex(ref int index)
         {
-
+            foreach (int i in gridView1.GetSelectedRows())
+            {
+                DataRow row = gridView1.GetDataRow(i);
+                index = int.Parse(row["productId"].ToString());
+                
+            }
+            gridView1.DeleteSelectedRows();
         }
 
-        private void btnClear_Click(object sender, EventArgs e)
+        public void ChangeToReadOnlyMode(bool aux)
         {
+            if (aux)
+            {
+                btnSave.Enabled = false;
+                folioExits = true;
+            }
+            else
+            {
+                btnSave.Enabled = true;
+                folioExits = false;
+            }
+        }
 
+        private void tbFolio_InvalidValue(object sender, DevExpress.XtraEditors.Controls.InvalidValueExceptionEventArgs e)
+        {
+            
+           
         }
     }
 }

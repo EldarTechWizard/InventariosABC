@@ -45,28 +45,28 @@
             this.tabPane1.Pages.AddRange(new DevExpress.XtraBars.Navigation.NavigationPageBase[] {
             this.InventoryTab,
             this.ProductTab});
-            this.tabPane1.RegularSize = new System.Drawing.Size(856, 781);
+            this.tabPane1.RegularSize = new System.Drawing.Size(747, 781);
             this.tabPane1.SelectedPage = null;
-            this.tabPane1.Size = new System.Drawing.Size(856, 781);
+            this.tabPane1.Size = new System.Drawing.Size(747, 781);
             this.tabPane1.TabIndex = 0;
             // 
             // InventoryTab
             // 
             this.InventoryTab.Caption = "Inventario ABC";
             this.InventoryTab.Name = "InventoryTab";
-            this.InventoryTab.Size = new System.Drawing.Size(856, 740);
+            this.InventoryTab.Size = new System.Drawing.Size(788, 740);
             // 
             // ProductTab
             // 
             this.ProductTab.Caption = "ProductCRUD";
             this.ProductTab.Name = "ProductTab";
-            this.ProductTab.Size = new System.Drawing.Size(856, 740);
+            this.ProductTab.Size = new System.Drawing.Size(788, 740);
             // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(856, 781);
+            this.ClientSize = new System.Drawing.Size(747, 781);
             this.Controls.Add(this.tabPane1);
             this.Name = "MainView";
             this.Text = "MainView";

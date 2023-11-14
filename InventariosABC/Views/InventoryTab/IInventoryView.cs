@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.XtraGrid.Views.Grid;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace InventariosABC.Views.InventoryTab
         string EditValue { get; set; }
         double TotalAmount { get; set; }
 
+        bool FolioExist { get; set; }
+
         event EventHandler LoadEvent;
         event EventHandler SaveEvent;
         event EventHandler DeleteEvent;
@@ -30,6 +33,7 @@ namespace InventariosABC.Views.InventoryTab
         event KeyPressEventHandler KeyReleaseEvent;
         event EventHandler InsertEvent;
         event EventHandler DescriptionChanged;
+        event RowCellClickEventHandler RightClickRowEvent;
         void SetDataSourceDataGrid(DataTable data);
         void SetDataSourceLookUpEdit(DataTable data);
         void AddNewRowDataGrid();
@@ -37,7 +41,10 @@ namespace InventariosABC.Views.InventoryTab
         void ClearAllTextBox();
         void ClearProducTextBox();
         void ClearIdTextBox();
-
         void SwicthStateMovementType(bool val);
+        void DeleteRowIndex(ref int index);
+        void ChangeToReadOnlyMode(bool aux);
+
+
     }
 }

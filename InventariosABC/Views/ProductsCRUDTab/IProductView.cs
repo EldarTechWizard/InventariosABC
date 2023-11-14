@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.XtraGrid.Views.Grid;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -22,10 +23,13 @@ namespace InventariosABC.Views.ProductsTab
         event EventHandler FolioChangedEvent;
         event EventHandler GridClickEvent;
         event EventHandler LoadEvent;
+        event RowCellClickEventHandler RightClickRowEvent;
 
         void SetDataGridSource(DataTable data);
         void ClearTextBox();
         void ChangeToEditMode(bool aux);
         void SelectedRow();
+
+        void SelectedRowIndex(ref int Index);
     }
 }
