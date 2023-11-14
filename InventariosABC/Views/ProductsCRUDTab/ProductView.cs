@@ -39,6 +39,7 @@ namespace InventariosABC.Views.ProductsTab
         public event EventHandler SaveEvent;
         public event EventHandler LoadEvent;
         public event EventHandler DeleteEvent;
+        public event EventHandler ClearEvent;
         public event EventHandler FolioChangedEvent;
         public event EventHandler GridClickEvent;
         public event RowCellClickEventHandler RightClickRowEvent;
@@ -60,11 +61,13 @@ namespace InventariosABC.Views.ProductsTab
             if (aux)
             {
                 btnSave.Text = "Editar";
+                tbBalance.ReadOnly = true;
                 editMode = true;
             }
             else
             {
                 btnSave.Text = "Agregar";
+                tbBalance.ReadOnly = false;
                 editMode = false;
             }
         }

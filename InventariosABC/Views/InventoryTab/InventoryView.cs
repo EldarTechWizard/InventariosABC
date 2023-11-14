@@ -36,6 +36,7 @@ namespace InventariosABC.Views.InventoryTab
             tbFolio.TextChanged += delegate { FolioChangedEvent?.Invoke(this, EventArgs.Empty); };
             
             lueDescription.EditValueChanged += delegate { DescriptionChanged?.Invoke(this, EventArgs.Empty); };
+            tbProductId.TextChanged += delegate { ProductIdChanged?.Invoke(this, EventArgs.Empty); };
 
             tbProductId.KeyDown += (s, e) =>
             {
@@ -81,7 +82,22 @@ namespace InventariosABC.Views.InventoryTab
 
         public string Date { get => dpDate.Text; set => dpDate.Text = value;}
         public string MovementType { get => cbMovementType.Text; set => cbMovementType.Text = value; }
-        public int ProductId { get => int.Parse(tbProductId.Text); set => tbProductId.Text = value.ToString(); }
+        public int ProductId {
+            get
+            {
+                int result = 0;
+
+                if (int.TryParse(tbProductId.Text, out result))
+                {
+                    return result;
+                }
+
+                return 0;
+
+            }
+
+            set => tbProductId.Text = value.ToString();
+        }
         public string Description { get => lueDescription.Text; set => lueDescription.Text = value; }
         public int Quantity 
         {
@@ -116,6 +132,7 @@ namespace InventariosABC.Views.InventoryTab
         public event EventHandler InsertEvent;
         public event KeyPressEventHandler KeyPressEvent;
         public event RowCellClickEventHandler RightClickRowEvent;
+        public event EventHandler ProductIdChanged;
 
         public void SetDataSourceDataGrid(DataTable data)
         {
@@ -168,6 +185,13 @@ namespace InventariosABC.Views.InventoryTab
             tbQuantity.Text = "1";
             lueDescription.Text = string.Empty;
             tbSalePrice.Text = string.Empty;          
+        }
+
+        public void ClearProducTextBoxIdHead()
+        {
+            tbQuantity.Text = "1";
+            lueDescription.Text = string.Empty;
+            tbSalePrice.Text = string.Empty;
         }
 
         public void ClearIdTextBox()

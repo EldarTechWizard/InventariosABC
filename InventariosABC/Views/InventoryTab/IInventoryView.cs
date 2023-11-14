@@ -34,6 +34,7 @@ namespace InventariosABC.Views.InventoryTab
         event EventHandler InsertEvent;
         event EventHandler DescriptionChanged;
         event RowCellClickEventHandler RightClickRowEvent;
+        event EventHandler ProductIdChanged;
         void SetDataSourceDataGrid(DataTable data);
         void SetDataSourceLookUpEdit(DataTable data);
         void AddNewRowDataGrid();
@@ -44,6 +45,7 @@ namespace InventariosABC.Views.InventoryTab
         void SwicthStateMovementType(bool val);
         void DeleteRowIndex(ref int index);
         void ChangeToReadOnlyMode(bool aux);
+        void ClearProducTextBoxIdHead();
 
 
     }

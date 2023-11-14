@@ -23,6 +23,7 @@ namespace InventariosABC.Views.ProductsTab
         event EventHandler FolioChangedEvent;
         event EventHandler GridClickEvent;
         event EventHandler LoadEvent;
+        event EventHandler ClearEvent;
         event RowCellClickEventHandler RightClickRowEvent;
 
         void SetDataGridSource(DataTable data);

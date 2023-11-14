@@ -41,6 +41,7 @@ namespace InventariosABC.Presenter
             this.view.InsertEvent += this.InsertEvent;
             this.view.RightClickRowEvent += this.RightClickRowEvent;
             this.view.KeyPressEvent += this.KeyPressEvent;
+            this.view.ProductIdChanged += this.ProductIdChanged;
         }
 
 
@@ -89,6 +90,12 @@ namespace InventariosABC.Presenter
             data.Columns.Add("amount", typeof(double));
             view.SetDataSourceDataGrid(data);
         }
+
+        public void ProductIdChanged(object sender, EventArgs e)
+        {
+            AutoFillTextBoxWithId();
+        }
+
 
         public void SaveEvent(object sender, EventArgs e)
         {
@@ -474,6 +481,31 @@ namespace InventariosABC.Presenter
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+        public void AutoFillTextBoxWithId()
+        {
+            try
+            {
+                
+                if(!productList.ContainsKey(view.ProductId))
+                {
+                    view.ClearProducTextBoxIdHead();
+                    return;
+                }
+                
+
+                Product product = productList[view.ProductId];
+                view.Description = product.Description;
+                view.SalesPrice = product.SalePrice;
+                view.Balance = product.Balance;
+
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 

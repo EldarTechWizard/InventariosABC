@@ -40,6 +40,7 @@
             this.tbBalance = new DevExpress.XtraEditors.TextEdit();
             this.btnDelete = new DevExpress.XtraEditors.SimpleButton();
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
+            this.btnClear = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.gcProducts)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbProductId.Properties)).BeginInit();
@@ -145,14 +146,13 @@
             this.tbBalance.Properties.MaskSettings.Set("mask", "\\d+");
             this.tbBalance.Properties.MaskSettings.Set("placeholder", '\0');
             this.tbBalance.Properties.MaskSettings.Set("allowBlankInput", false);
-            this.tbBalance.Properties.ReadOnly = true;
             this.tbBalance.Properties.UseMaskAsDisplayFormat = true;
             this.tbBalance.Size = new System.Drawing.Size(250, 22);
             this.tbBalance.TabIndex = 4;
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(426, 174);
+            this.btnDelete.Location = new System.Drawing.Point(452, 174);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(114, 42);
             this.btnDelete.TabIndex = 5;
@@ -160,17 +160,26 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(577, 174);
+            this.btnSave.Location = new System.Drawing.Point(592, 174);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(125, 42);
             this.btnSave.TabIndex = 6;
             this.btnSave.Text = "Agregar";
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(313, 174);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(119, 42);
+            this.btnClear.TabIndex = 18;
+            this.btnClear.Text = "Limpiar";
             // 
             // ProductView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(746, 559);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.tbBalance);
@@ -209,5 +218,6 @@
         private DevExpress.XtraEditors.TextEdit tbBalance;
         private DevExpress.XtraEditors.SimpleButton btnDelete;
         private DevExpress.XtraEditors.SimpleButton btnSave;
+        private DevExpress.XtraEditors.SimpleButton btnClear;
     }
 }
