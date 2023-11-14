@@ -374,7 +374,9 @@ namespace SqlInventoryLibrary.Repository
                     cmd.CommandTimeout = 120;                  
                     dt.Load(cmd.ExecuteReader());
 
-                    maxFolio = (int)dt.Rows[0][0];
+                    int.TryParse(dt.Rows[0][0].ToString(), out maxFolio);
+                    
+
                 }
                 return true;
             }

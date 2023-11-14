@@ -42,12 +42,12 @@ namespace InventariosABC.Views.InventoryTab
                 KeyDownEvent?.Invoke(s, e);
             };
 
-            //tbProductId.KeyPress += (s, e) =>
-            //{
-            //    KeyReleaseEvent?.Invoke(s, e);
-            //};
+            tbQuantity.KeyPress += (s, e) =>
+            {
+                KeyPressEvent?.Invoke(s, e);
+            };
 
-       
+
             gridView1.RowCellClick += (s, e) =>
             {
                 RightClickRowEvent?.Invoke(s, e);
@@ -61,8 +61,10 @@ namespace InventariosABC.Views.InventoryTab
         private double balance = 0;
         private bool folioExits = false;
 
-        public int Folio { 
-            get  {
+        public int Folio 
+        { 
+            get  
+            {
                 int result = 0;
 
                 if (int.TryParse(tbFolio.Text,out result))
@@ -72,14 +74,32 @@ namespace InventariosABC.Views.InventoryTab
 
                 return 0;          
             
-            } set => tbFolio.Text = value.ToString(); 
+            } 
+            
+            set => tbFolio.Text = value.ToString(); 
         }
 
         public string Date { get => dpDate.Text; set => dpDate.Text = value;}
         public string MovementType { get => cbMovementType.Text; set => cbMovementType.Text = value; }
         public int ProductId { get => int.Parse(tbProductId.Text); set => tbProductId.Text = value.ToString(); }
         public string Description { get => lueDescription.Text; set => lueDescription.Text = value; }
-        public int Quantity { get => int.Parse(tbQuantity.Text  ); set => tbQuantity.Text = value.ToString(); }
+        public int Quantity 
+        {
+            get 
+            {
+                int result = 0;
+
+                if (int.TryParse(tbQuantity.Text, out result))
+                {
+                    return result;
+                }
+
+                return 0;
+            }
+
+
+            set => tbQuantity.Text = value.ToString(); 
+        }
         public double SalesPrice { get => double.Parse(tbSalePrice.Text); set => tbSalePrice.Text = value.ToString(); }
         public double TotalAmount { get => double.Parse(tbTotal.Text); set => tbTotal.Text = value.ToString(); }
         public string EditValue { get => lueDescription.EditValue.ToString(); set => lueDescription.EditValue = value; }
@@ -94,7 +114,7 @@ namespace InventariosABC.Views.InventoryTab
         public event EventHandler LoadEvent;
         public event EventHandler DescriptionChanged;
         public event EventHandler InsertEvent;
-        public event KeyPressEventHandler KeyReleaseEvent;
+        public event KeyPressEventHandler KeyPressEvent;
         public event RowCellClickEventHandler RightClickRowEvent;
 
         public void SetDataSourceDataGrid(DataTable data)

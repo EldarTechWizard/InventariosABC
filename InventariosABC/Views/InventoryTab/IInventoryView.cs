@@ -30,7 +30,7 @@ namespace InventariosABC.Views.InventoryTab
         event EventHandler ClearEvent;
         event EventHandler FolioChangedEvent;
         event KeyEventHandler KeyDownEvent;
-        event KeyPressEventHandler KeyReleaseEvent;
+        event KeyPressEventHandler KeyPressEvent;
         event EventHandler InsertEvent;
         event EventHandler DescriptionChanged;
         event RowCellClickEventHandler RightClickRowEvent;

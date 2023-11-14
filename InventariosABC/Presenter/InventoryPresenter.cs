@@ -40,8 +40,15 @@ namespace InventariosABC.Presenter
             this.view.DescriptionChanged += this.DescriptionChanged;
             this.view.InsertEvent += this.InsertEvent;
             this.view.RightClickRowEvent += this.RightClickRowEvent;
+            this.view.KeyPressEvent += this.KeyPressEvent;
         }
 
+
+        private void KeyPressEvent(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == (char)Keys.Enter)
+                InsertIntoDataGrid();
+        }
         private void RightClickRowEvent(object sender, RowCellClickEventArgs e)
         {
             if(e.Button == MouseButtons.Right)
@@ -108,10 +115,16 @@ namespace InventariosABC.Presenter
 
         public void InsertEvent(object sender, EventArgs e)
         {
+            InsertIntoDataGrid();
+                
+        }
+
+        public void InsertIntoDataGrid()
+        {
             try
             {
 
-                List<string> list = new List<string>() { "Entrada","Salida"};
+                List<string> list = new List<string>() { "Entrada", "Salida" };
                 if (!list.Contains(view.MovementType))
                 {
                     throw new Exception("Error el tipo de movimiento solo puede ser entrada o salida");
@@ -132,7 +145,7 @@ namespace InventariosABC.Presenter
                 {
                     double newQuantity = productList[product.ProductID].Balance - view.Quantity;
 
-                    if(newQuantity < 0)
+                    if (newQuantity < 0)
                     {
                         throw new Exception("La cantidad no puede ser mayor al numero de articulos restantes del producto");
                     }
@@ -178,16 +191,14 @@ namespace InventariosABC.Presenter
                     detailsList.Add(detailsRecord);
                     AddNewRowDG();
                 }
-                
+
                 //view.ClearProducTextBox();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-                
         }
-
         public void KeyDownEvent(object sender, KeyEventArgs e)
         {
                     
@@ -214,10 +225,7 @@ namespace InventariosABC.Presenter
                        
         }
 
-        public void KeyPressEvent(object sender, KeyPressEventArgs e)
-        {
-            MessageBox.Show(e.KeyChar.ToString());
-        }
+    
 
 
         public void GetRecords()
