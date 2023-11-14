@@ -106,7 +106,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.lueDescription.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
             this.lueDescription.Size = new System.Drawing.Size(315, 22);
-            this.lueDescription.TabIndex = 8;
+            this.lueDescription.TabIndex = 5;
             // 
             // label3
             // 
@@ -171,7 +171,7 @@
             "Entrada",
             "Salida"});
             this.cbMovementType.Size = new System.Drawing.Size(176, 22);
-            this.cbMovementType.TabIndex = 20;
+            this.cbMovementType.TabIndex = 3;
             // 
             // tbFolio
             // 
@@ -185,7 +185,7 @@
             this.tbFolio.Properties.MaskSettings.Set("allowBlankInput", true);
             this.tbFolio.Properties.UseMaskAsDisplayFormat = true;
             this.tbFolio.Size = new System.Drawing.Size(176, 22);
-            this.tbFolio.TabIndex = 23;
+            this.tbFolio.TabIndex = 1;
             this.tbFolio.InvalidValue += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.tbFolio_InvalidValue);
             // 
             // tbQuantity
@@ -199,7 +199,7 @@
             this.tbQuantity.Properties.MaskSettings.Set("showPlaceholders", false);
             this.tbQuantity.Properties.MaskSettings.Set("allowBlankInput", false);
             this.tbQuantity.Size = new System.Drawing.Size(174, 22);
-            this.tbQuantity.TabIndex = 24;
+            this.tbQuantity.TabIndex = 6;
             // 
             // tbSalePrice
             // 
@@ -208,14 +208,14 @@
             this.tbSalePrice.Properties.HideSelection = false;
             this.tbSalePrice.Properties.ReadOnly = true;
             this.tbSalePrice.Size = new System.Drawing.Size(210, 22);
-            this.tbSalePrice.TabIndex = 25;
+            this.tbSalePrice.TabIndex = 7;
             // 
             // dpDate
             // 
             this.dpDate.Location = new System.Drawing.Point(453, 39);
             this.dpDate.Name = "dpDate";
             this.dpDate.Size = new System.Drawing.Size(280, 22);
-            this.dpDate.TabIndex = 26;
+            this.dpDate.TabIndex = 2;
             // 
             // tbTotal
             // 
@@ -231,7 +231,7 @@
             this.btnInsert.Location = new System.Drawing.Point(577, 292);
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.Size = new System.Drawing.Size(137, 40);
-            this.btnInsert.TabIndex = 28;
+            this.btnInsert.TabIndex = 8;
             this.btnInsert.Text = "Insertar";
             // 
             // btnDelete
@@ -239,7 +239,7 @@
             this.btnDelete.Location = new System.Drawing.Point(312, 630);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(116, 40);
-            this.btnDelete.TabIndex = 29;
+            this.btnDelete.TabIndex = 9;
             this.btnDelete.Text = "Eliminar";
             // 
             // btnClear
@@ -247,7 +247,7 @@
             this.btnClear.Location = new System.Drawing.Point(453, 630);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(115, 40);
-            this.btnClear.TabIndex = 30;
+            this.btnClear.TabIndex = 10;
             this.btnClear.Text = "Limpiar";
             // 
             // btnSave
@@ -255,7 +255,7 @@
             this.btnSave.Location = new System.Drawing.Point(589, 630);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(125, 40);
-            this.btnSave.TabIndex = 31;
+            this.btnSave.TabIndex = 11;
             this.btnSave.Text = "Guardar";
             // 
             // tbProductId
@@ -264,7 +264,7 @@
             this.tbProductId.Name = "tbProductId";
             this.tbProductId.Properties.ReadOnly = true;
             this.tbProductId.Size = new System.Drawing.Size(174, 22);
-            this.tbProductId.TabIndex = 32;
+            this.tbProductId.TabIndex = 4;
             // 
             // InventoryView
             // 

@@ -112,7 +112,7 @@
             this.tbProductId.Properties.MaskSettings.Set("placeholder", '\0');
             this.tbProductId.Properties.MaskSettings.Set("allowBlankInput", true);
             this.tbProductId.Size = new System.Drawing.Size(179, 22);
-            this.tbProductId.TabIndex = 19;
+            this.tbProductId.TabIndex = 1;
             // 
             // tbSalePrice
             // 
@@ -127,14 +127,14 @@
             this.tbSalePrice.Properties.MaskSettings.Set("showPlaceholders", false);
             this.tbSalePrice.Properties.MaskSettings.Set("culture", "");
             this.tbSalePrice.Size = new System.Drawing.Size(179, 22);
-            this.tbSalePrice.TabIndex = 20;
+            this.tbSalePrice.TabIndex = 3;
             // 
             // tbDescription
             // 
             this.tbDescription.Location = new System.Drawing.Point(452, 48);
             this.tbDescription.Name = "tbDescription";
             this.tbDescription.Size = new System.Drawing.Size(250, 22);
-            this.tbDescription.TabIndex = 21;
+            this.tbDescription.TabIndex = 2;
             // 
             // tbBalance
             // 
@@ -148,14 +148,14 @@
             this.tbBalance.Properties.ReadOnly = true;
             this.tbBalance.Properties.UseMaskAsDisplayFormat = true;
             this.tbBalance.Size = new System.Drawing.Size(250, 22);
-            this.tbBalance.TabIndex = 22;
+            this.tbBalance.TabIndex = 4;
             // 
             // btnDelete
             // 
             this.btnDelete.Location = new System.Drawing.Point(426, 174);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(114, 42);
-            this.btnDelete.TabIndex = 23;
+            this.btnDelete.TabIndex = 5;
             this.btnDelete.Text = "Eliminar";
             // 
             // btnSave
@@ -163,7 +163,7 @@
             this.btnSave.Location = new System.Drawing.Point(577, 174);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(125, 42);
-            this.btnSave.TabIndex = 24;
+            this.btnSave.TabIndex = 6;
             this.btnSave.Text = "Agregar";
             // 
             // ProductView

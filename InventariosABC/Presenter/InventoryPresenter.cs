@@ -73,7 +73,7 @@ namespace InventariosABC.Presenter
                 }
             }
         }
-
+         
         public void LoadEvent(object sender, EventArgs e)
         {
             
@@ -451,6 +451,7 @@ namespace InventariosABC.Presenter
                 GetProducts();
                 detailsList.Clear();
                 view.SetDataSourceDataGrid(null);
+                SetMaxFolio();
 
                 MessageBox.Show("Folio eliminado correctamente");
             }
