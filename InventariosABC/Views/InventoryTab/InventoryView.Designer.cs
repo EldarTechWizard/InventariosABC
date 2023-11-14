@@ -262,7 +262,11 @@
             // 
             this.tbProductId.Location = new System.Drawing.Point(152, 163);
             this.tbProductId.Name = "tbProductId";
-            this.tbProductId.Properties.ReadOnly = true;
+            this.tbProductId.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.RegExpMaskManager));
+            this.tbProductId.Properties.MaskSettings.Set("mask", "\\d+");
+            this.tbProductId.Properties.MaskSettings.Set("placeholder", '\0');
+            this.tbProductId.Properties.MaskSettings.Set("showPlaceholders", false);
+            this.tbProductId.Properties.MaskSettings.Set("allowBlankInput", true);
             this.tbProductId.Size = new System.Drawing.Size(174, 22);
             this.tbProductId.TabIndex = 4;
             // 

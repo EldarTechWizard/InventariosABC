@@ -315,10 +315,11 @@ namespace SqlInventoryLibrary.Repository
                 {
                     conn.Open();
                     cmd.Connection = conn;
-                    cmd.CommandText = "update products set description = @description, salePrice = @salePrice  where productId = @productId";
+                    cmd.CommandText = "update products set description = @description, salePrice = @salePrice, balance = @balance  where productId = @productId";
                     cmd.CommandTimeout = 120;
                     cmd.Parameters.AddWithValue("@productId", product.ProductID);
                     cmd.Parameters.AddWithValue("@description", product.Description);
+                    cmd.Parameters.AddWithValue("@balance", product.Balance);
                     cmd.Parameters.AddWithValue("@salePrice", product.SalePrice);
                     cmd.ExecuteNonQuery();
 
