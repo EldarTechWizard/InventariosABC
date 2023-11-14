@@ -386,5 +386,34 @@ namespace SqlInventoryLibrary.Repository
                 return false;
             }
         }
+
+        public bool GetMaxProductId(ref int maxProductId)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.Connection = conn;
+                    cmd.CommandText = "select Max(productId) FROM products";
+                    cmd.CommandTimeout = 120;
+                    dt.Load(cmd.ExecuteReader());
+
+                    int.TryParse(dt.Rows[0][0].ToString(), out maxProductId);
+
+
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                lastError = ex.Message;
+                return false;
+            }
+        }
+
+        
     }
 }

@@ -36,6 +36,7 @@ namespace InventariosABC.Presenter
         public void LoadEvent(object sender, EventArgs e)
         {
             GetAllProducts();
+            SetMaxFolio();
         }
         public void SaveEvent(object sender, EventArgs e)
         {
@@ -212,6 +213,25 @@ namespace InventariosABC.Presenter
             }
         }
 
+        public void SetMaxFolio()
+        {
+            try
+            {
+                int maxFolio = 0;
+                if(!sqlRepository.GetMaxProductId(ref maxFolio))
+                {
+                    throw new Exception();
+                }
+
+                maxFolio++;
+
+                view.ProductId = maxFolio;
+
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         public void GetSelectedRows()
         {
