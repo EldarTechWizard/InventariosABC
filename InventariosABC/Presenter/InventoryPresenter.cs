@@ -71,6 +71,11 @@ namespace InventariosABC.Presenter
                     }
 
                     detailsList.RemoveAt(i);
+
+                    if (detailsList.Count == 0)
+                    {
+                        view.SwicthStateMovementType(true);
+                    }
                 }
             }
         }
