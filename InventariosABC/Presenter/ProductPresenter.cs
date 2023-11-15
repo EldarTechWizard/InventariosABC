@@ -62,8 +62,8 @@ namespace InventariosABC.Presenter
         {
             if (e.Button == MouseButtons.Right)
             {                          
-                GetSelectedRows();
-                DeleteProduct();             
+                GetSelectedRows();               
+                DeleteProduct();  
             }
         }
         public void DeleteEvent(object sender, EventArgs e)
@@ -216,6 +216,7 @@ namespace InventariosABC.Presenter
 
                 GetAllProducts();
                 view.ClearTextBox();
+                view.ChangeToEditMode(false);
 
                 MessageBox.Show("Productos eliminado correctamente");
             }
