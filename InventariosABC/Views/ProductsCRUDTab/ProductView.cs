@@ -50,6 +50,7 @@ namespace InventariosABC.Views.ProductsTab
             btnSave.Click += delegate { SaveEvent?.Invoke(this, EventArgs.Empty); };
             btnDelete.Click += delegate { DeleteEvent?.Invoke(this, EventArgs.Empty); };
             tbProductId.TextChanged += delegate { FolioChangedEvent?.Invoke(this, EventArgs.Empty); };
+            btnClear.Click += delegate { ClearEvent?.Invoke(this, EventArgs.Empty); };
             gridView1.Click += delegate { GridClickEvent?.Invoke(this, EventArgs.Empty); };
             gridView1.RowCellClick += (s, e) =>
             {

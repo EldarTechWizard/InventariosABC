@@ -30,7 +30,14 @@ namespace InventariosABC.Presenter
             this.view.FolioChangedEvent += FolioChangedEvent;
             this.view.GridClickEvent += GridClickEvent;
             this.view.RightClickRowEvent += RightClickEvent;
+            this.view.ClearEvent += ClearEvent;
 
+        }
+
+        private void ClearEvent(object sender, EventArgs e)
+        {
+            view.ClearTextBox();
+            SetMaxFolio();
         }
 
         public void LoadEvent(object sender, EventArgs e)
