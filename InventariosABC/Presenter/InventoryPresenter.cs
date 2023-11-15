@@ -71,6 +71,11 @@ namespace InventariosABC.Presenter
                     }
 
                     detailsList.RemoveAt(i);
+
+                    if(detailsList.Count == 0)
+                    {
+                        view.SwicthStateMovementType(true);
+                    }
                 }
             }
         }
@@ -175,18 +180,16 @@ namespace InventariosABC.Presenter
                     }
                 }
 
-                bool isProductAlready = false;
-                foreach (DetailsRecord details in detailsList)
-                {
-                    if (details.Product.ProductID == view.ProductId)
-                    {
-                        view.UpdateProductQuantity();
-                        details.Quantity += view.Quantity;
-                        details.Amount += (view.SalesPrice * view.Quantity);
-
-                        isProductAlready = true;
-                    }
-                }
+                
+                //foreach (DetailsRecord details in detailsList)
+                //{
+                //    if (details.Product.ProductID == view.ProductId)
+                //    {
+                //       /* view.UpdateProductQuantity()*/;
+                //        details.Quantity += view.Quantity;
+                //        details.Amount += (view.SalesPrice * view.Quantity);                     
+                //    }
+                //}
 
                 DetailsRecord detailsRecord = new DetailsRecord
                 {
@@ -203,14 +206,10 @@ namespace InventariosABC.Presenter
                 {
                     view.SwicthStateMovementType(false);
                 }
-
-
-
-                if (!isProductAlready)
-                {
-                    detailsList.Add(detailsRecord);
-                    AddNewRowDG();
-                }
+             
+                detailsList.Add(detailsRecord);
+                AddNewRowDG();
+                
 
                 //view.ClearProducTextBox();
             }
@@ -328,20 +327,22 @@ namespace InventariosABC.Presenter
             {
                 DataTable dataTransactions = new DataTable();
                 DataTable dataHeader = new DataTable();
+                detailsList.Clear();
+
 
                 if (!records.ContainsKey(view.Folio))
                 {
 
                     view.SetDataSourceDataGrid(null);
                     view.SwicthStateMovementType(true);
-                    view.ChangeToReadOnlyMode(false);
-
-                    detailsList.Clear();
+                    view.ChangeToReadOnlyMode(false);                  
 
                     view.TotalAmount = 0;
 
                     return;
                 }
+
+
 
 
                 if(!sqlRepository.GetAllTransactionData(ref dataTransactions, view.Folio))

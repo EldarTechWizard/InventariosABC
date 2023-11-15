@@ -47,6 +47,7 @@ namespace SqlInventoryLibrary.Repository
                         cmd.ExecuteNonQuery();
 
                         int i = 0;
+                        Dictionary<int,int> balance = new Dictionary<int,int>();
                         foreach (DetailsRecord details in record.DetailsRecords)
                         {
                             cmd.CommandText = $"insert into inventoryDetails (folio, productId, quantity) values (@folio{i},@productId{i},@quantity{i})";
@@ -55,19 +56,36 @@ namespace SqlInventoryLibrary.Repository
                             cmd.Parameters.AddWithValue($"@quantity{i}", details.Quantity);
                             cmd.ExecuteNonQuery();
 
-                            if(record.MovementType == "Entrada")
-                            {
 
-                                details.Product.Balance += details.Quantity;
+                          
+                            if (record.MovementType == "Entrada")
+                            {
+                                if (balance.ContainsKey(details.Product.ProductID))
+                                {
+                                    balance[details.Product.ProductID] += details.Quantity;
+                                }
+                                else
+                                {
+                                    balance.Add(details.Product.ProductID, (details.Quantity + (int)details.Product.Balance));
+                                }
+                               
                                 cmd.CommandText = $"update products set balance = @balance{i} where productId = @id{i}";                                
-                                cmd.Parameters.AddWithValue($"@balance{i}",details.Product.Balance);
+                                cmd.Parameters.AddWithValue($"@balance{i}", balance[details.Product.ProductID]);
                                 cmd.Parameters.AddWithValue($"@id{i}", details.Product.ProductID);
                                 cmd.ExecuteNonQuery();
                             }else if(record.MovementType == "Salida")
                             {
-                                details.Product.Balance -= details.Quantity;
+                                if (balance.ContainsKey(details.Product.ProductID))
+                                {
+                                    balance[details.Product.ProductID] -= details.Quantity;
+                                }
+                                else
+                                {
+                                    balance.Add(details.Product.ProductID, ( (int)details.Product.Balance) - details.Quantity );
+                                }
+
                                 cmd.CommandText = $"update products set balance = @balance{i} where productId = @id{i}";
-                                cmd.Parameters.AddWithValue($"@balance{i}", details.Product.Balance);
+                                cmd.Parameters.AddWithValue($"@balance{i}", balance[details.Product.ProductID]);
                                 cmd.Parameters.AddWithValue($"@id{i}", details.Product.ProductID);
                                 cmd.ExecuteNonQuery();
                             }
@@ -119,23 +137,40 @@ namespace SqlInventoryLibrary.Repository
                         cmd.ExecuteNonQuery();
 
 
-
+                        Dictionary<int, int> balance = new Dictionary<int, int>();
                         int i = 0;
                         foreach (DetailsRecord details in record.DetailsRecords)
                         {
+                   
                             if (record.MovementType == "Entrada")
                             {
-                                details.Product.Balance -= details.Quantity;
+                                if (balance.ContainsKey(details.Product.ProductID))
+                                {
+                                    balance[details.Product.ProductID] -= details.Quantity;
+                                }
+                                else
+                                {
+                                    balance.Add(details.Product.ProductID, ((int)details.Product.Balance) - details.Quantity );
+                                }
+                                
                                 cmd.CommandText = $"update products set balance = @balance{i} where productId = @id{i}";
-                                cmd.Parameters.AddWithValue($"@balance{i}", details.Product.Balance);
+                                cmd.Parameters.AddWithValue($"@balance{i}", balance[details.Product.ProductID]);
                                 cmd.Parameters.AddWithValue($"@id{i}", details.Product.ProductID);
                                 cmd.ExecuteNonQuery();
                             }
                             else if (record.MovementType == "Salida")
                             {
-                                details.Product.Balance += details.Quantity;
+                                if (balance.ContainsKey(details.Product.ProductID))
+                                {
+                                    balance[details.Product.ProductID] += details.Quantity;
+                                }
+                                else
+                                {
+                                    balance.Add(details.Product.ProductID, ((int)details.Product.Balance) + details.Quantity);
+                                }
+
                                 cmd.CommandText = $"update products set balance = @balance{i} where productId = @id{i}";
-                                cmd.Parameters.AddWithValue($"@balance{i}", details.Product.Balance);
+                                cmd.Parameters.AddWithValue($"@balance{i}", balance[details.Product.ProductID]);
                                 cmd.Parameters.AddWithValue($"@id{i}", details.Product.ProductID);
                                 cmd.ExecuteNonQuery();
                             }
