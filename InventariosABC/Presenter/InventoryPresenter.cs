@@ -132,14 +132,25 @@ namespace InventariosABC.Presenter
             {
 
                 List<string> list = new List<string>() { "Entrada", "Salida" };
+
                 if (!list.Contains(view.MovementType))
                 {
-                    throw new Exception("Error el tipo de movimiento solo puede ser entrada o salida");
+                    throw new Exception("Error: El tipo de movimiento solo puede ser entrada o salida");
+                }
+
+                if (view.FolioExist)
+                {
+                    return;
                 }
 
                 if (view.Quantity == 0)
                 {
-                    throw new Exception("Error la cantidad de producto debe ser mayor a 0");
+                    throw new Exception("Error: La cantidad de producto debe ser mayor a 0");
+                }
+
+                if (!productList.ContainsKey(view.ProductId))
+                {
+                    throw new Exception("Error: Debe ingresar un producto valido");
                 }
 
                 Product product = new Product();
@@ -147,6 +158,8 @@ namespace InventariosABC.Presenter
                 product.SalePrice = view.SalesPrice;
                 product.Description = view.Description;
                 product.Balance = view.Balance;
+
+                
 
                 if (view.MovementType == "Salida")
                 {

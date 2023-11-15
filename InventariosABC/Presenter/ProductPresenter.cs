@@ -138,6 +138,11 @@ namespace InventariosABC.Presenter
         {
             try
             {
+                if(view.ProductId == 0)
+                {
+                    throw new Exception("Error: Solo numeros mayores a 0");
+                }
+
                 Product product = new Product
                 {
                     ProductID = view.ProductId,

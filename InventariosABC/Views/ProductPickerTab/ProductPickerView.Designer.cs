@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
             this.gcProducts = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.btnChoose = new DevExpress.XtraEditors.SimpleButton();
@@ -45,6 +45,7 @@
             // gcProducts
             // 
             this.gcProducts.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.gcProducts.Font = new System.Drawing.Font("Roboto Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gcProducts.Location = new System.Drawing.Point(0, 128);
             this.gcProducts.MainView = this.gridView1;
             this.gcProducts.Name = "gcProducts";
@@ -65,31 +66,40 @@
             // 
             // btnChoose
             // 
-            this.btnChoose.Location = new System.Drawing.Point(354, 36);
+            this.btnChoose.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(2)))), ((int)(((byte)(108)))));
+            this.btnChoose.Appearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(2)))), ((int)(((byte)(108)))));
+            this.btnChoose.Appearance.Font = new System.Drawing.Font("Roboto Light", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnChoose.Appearance.FontStyleDelta = System.Drawing.FontStyle.Bold;
+            this.btnChoose.Appearance.Options.UseBackColor = true;
+            this.btnChoose.Appearance.Options.UseBorderColor = true;
+            this.btnChoose.Appearance.Options.UseFont = true;
+            this.btnChoose.Location = new System.Drawing.Point(359, 26);
             this.btnChoose.Name = "btnChoose";
-            this.btnChoose.Size = new System.Drawing.Size(116, 29);
+            this.btnChoose.Size = new System.Drawing.Size(116, 35);
             this.btnChoose.TabIndex = 24;
             this.btnChoose.Text = "Elegir";
             // 
             // lueDescription
             // 
             this.lueDescription.EditValue = "";
-            this.lueDescription.Location = new System.Drawing.Point(19, 40);
+            this.lueDescription.Location = new System.Drawing.Point(12, 31);
             this.lueDescription.Name = "lueDescription";
+            this.lueDescription.Properties.Appearance.Font = new System.Drawing.Font("Roboto Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lueDescription.Properties.Appearance.Options.UseFont = true;
             this.lueDescription.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, false, false, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, false, false, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.lueDescription.Properties.DropDownRows = 1;
             this.lueDescription.Properties.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoSuggest;
             this.lueDescription.Properties.ShowDropDown = DevExpress.XtraEditors.Controls.ShowDropDown.Never;
             this.lueDescription.Properties.ShowHeader = false;
-            this.lueDescription.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
-            this.lueDescription.Size = new System.Drawing.Size(315, 22);
+            this.lueDescription.Size = new System.Drawing.Size(315, 26);
             this.lueDescription.TabIndex = 25;
             // 
             // ProductPickerView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(501, 641);
             this.Controls.Add(this.lueDescription);
             this.Controls.Add(this.btnChoose);

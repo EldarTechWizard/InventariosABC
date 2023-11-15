@@ -250,12 +250,14 @@ namespace InventariosABC.Views.InventoryTab
             {
                 btnSave.Enabled = false;
                 btnDelete.Enabled = true;
+                btnInsert.Enabled = false;
                 folioExits = true;
             }
             else
             {
                 btnSave.Enabled = true;
                 btnDelete.Enabled = false;
+                btnInsert.Enabled = true;
                 folioExits = false;
             }
         }

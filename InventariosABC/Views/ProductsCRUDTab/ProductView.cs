@@ -63,12 +63,14 @@ namespace InventariosABC.Views.ProductsTab
             {
                 btnSave.Text = "Editar";
                 tbBalance.ReadOnly = true;
+                btnDelete.Enabled = true;
                 editMode = true;
             }
             else
             {
                 btnSave.Text = "Agregar";
                 tbBalance.ReadOnly = false;
+                btnDelete.Enabled = false;
                 editMode = false;
             }
         }

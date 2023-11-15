@@ -41,12 +41,16 @@
             this.tabPane1.Controls.Add(this.ProductTab);
             this.tabPane1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabPane1.Location = new System.Drawing.Point(0, 0);
+            this.tabPane1.LookAndFeel.SkinMaskColor = System.Drawing.Color.SteelBlue;
+            this.tabPane1.LookAndFeel.SkinName = "DevExpress Dark Style";
+            this.tabPane1.LookAndFeel.UseDefaultLookAndFeel = false;
             this.tabPane1.Name = "tabPane1";
             this.tabPane1.Pages.AddRange(new DevExpress.XtraBars.Navigation.NavigationPageBase[] {
             this.InventoryTab,
             this.ProductTab});
             this.tabPane1.RegularSize = new System.Drawing.Size(747, 781);
-            this.tabPane1.SelectedPage = null;
+            this.tabPane1.RibbonAndBarsMergeStyle = DevExpress.XtraBars.Docking2010.Views.RibbonAndBarsMergeStyle.WhenNotFloating;
+            this.tabPane1.SelectedPage = this.ProductTab;
             this.tabPane1.Size = new System.Drawing.Size(747, 781);
             this.tabPane1.TabIndex = 0;
             // 
@@ -54,13 +58,13 @@
             // 
             this.InventoryTab.Caption = "Inventario ABC";
             this.InventoryTab.Name = "InventoryTab";
-            this.InventoryTab.Size = new System.Drawing.Size(788, 740);
+            this.InventoryTab.Size = new System.Drawing.Size(747, 746);
             // 
             // ProductTab
             // 
             this.ProductTab.Caption = "ProductCRUD";
             this.ProductTab.Name = "ProductTab";
-            this.ProductTab.Size = new System.Drawing.Size(788, 740);
+            this.ProductTab.Size = new System.Drawing.Size(747, 746);
             // 
             // MainView
             // 
