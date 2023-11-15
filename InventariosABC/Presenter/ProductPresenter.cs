@@ -216,7 +216,7 @@ namespace InventariosABC.Presenter
 
                 GetAllProducts();
                 view.ClearTextBox();
-
+                view.ChangeToEditMode(false);
                 MessageBox.Show("Productos eliminado correctamente");
             }
             catch(Exception ex)
