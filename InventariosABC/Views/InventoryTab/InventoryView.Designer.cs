@@ -76,7 +76,7 @@
             // 
             this.lDate.AutoSize = true;
             this.lDate.Font = new System.Drawing.Font("Roboto Light", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lDate.Location = new System.Drawing.Point(420, 42);
+            this.lDate.Location = new System.Drawing.Point(463, 39);
             this.lDate.Name = "lDate";
             this.lDate.Size = new System.Drawing.Size(59, 20);
             this.lDate.TabIndex = 3;
@@ -105,21 +105,22 @@
             // lueDescription
             // 
             this.lueDescription.EditValue = "";
-            this.lueDescription.Location = new System.Drawing.Point(399, 163);
+            this.lueDescription.Location = new System.Drawing.Point(500, 163);
+            this.lueDescription.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lueDescription.Name = "lueDescription";
             this.lueDescription.Properties.Appearance.Font = new System.Drawing.Font("Roboto Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lueDescription.Properties.Appearance.Options.UseFont = true;
             this.lueDescription.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.lueDescription.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
-            this.lueDescription.Size = new System.Drawing.Size(315, 26);
+            this.lueDescription.Size = new System.Drawing.Size(394, 26);
             this.lueDescription.TabIndex = 5;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Roboto Light", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(396, 139);
+            this.label3.Location = new System.Drawing.Point(496, 135);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(102, 20);
             this.label3.TabIndex = 9;
@@ -129,7 +130,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Roboto Light", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(88, 233);
+            this.label4.Location = new System.Drawing.Point(88, 236);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(78, 20);
             this.label4.TabIndex = 11;
@@ -139,7 +140,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Roboto Light", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(396, 236);
+            this.label5.Location = new System.Drawing.Point(496, 239);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(127, 20);
             this.label5.TabIndex = 13;
@@ -147,17 +148,20 @@
             // 
             // gcRecords
             // 
+            this.gcRecords.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gcRecords.Font = new System.Drawing.Font("Roboto Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gcRecords.Location = new System.Drawing.Point(60, 351);
+            this.gcRecords.Location = new System.Drawing.Point(76, 372);
             this.gcRecords.MainView = this.gridView1;
+            this.gcRecords.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gcRecords.Name = "gcRecords";
-            this.gcRecords.Size = new System.Drawing.Size(654, 200);
+            this.gcRecords.Size = new System.Drawing.Size(818, 250);
             this.gcRecords.TabIndex = 14;
             this.gcRecords.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
             // 
             // gridView1
             // 
+            this.gridView1.DetailHeight = 437;
             this.gridView1.GridControl = this.gcRecords;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsBehavior.ReadOnly = true;
@@ -167,7 +171,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Roboto Light", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(441, 570);
+            this.label6.Location = new System.Drawing.Point(570, 687);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(127, 20);
             this.label6.TabIndex = 17;
@@ -175,7 +179,8 @@
             // 
             // cbMovementType
             // 
-            this.cbMovementType.Location = new System.Drawing.Point(198, 90);
+            this.cbMovementType.Location = new System.Drawing.Point(208, 90);
+            this.cbMovementType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbMovementType.Name = "cbMovementType";
             this.cbMovementType.Properties.Appearance.Font = new System.Drawing.Font("Roboto Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbMovementType.Properties.Appearance.Options.UseFont = true;
@@ -184,12 +189,13 @@
             this.cbMovementType.Properties.Items.AddRange(new object[] {
             "Entrada",
             "Salida"});
-            this.cbMovementType.Size = new System.Drawing.Size(176, 26);
+            this.cbMovementType.Size = new System.Drawing.Size(220, 26);
             this.cbMovementType.TabIndex = 3;
             // 
             // tbFolio
             // 
-            this.tbFolio.Location = new System.Drawing.Point(198, 36);
+            this.tbFolio.Location = new System.Drawing.Point(208, 36);
+            this.tbFolio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbFolio.Name = "tbFolio";
             this.tbFolio.Properties.Appearance.Font = new System.Drawing.Font("Roboto Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbFolio.Properties.Appearance.Options.UseFont = true;
@@ -200,14 +206,15 @@
             this.tbFolio.Properties.MaskSettings.Set("showPlaceholders", false);
             this.tbFolio.Properties.MaskSettings.Set("allowBlankInput", true);
             this.tbFolio.Properties.UseMaskAsDisplayFormat = true;
-            this.tbFolio.Size = new System.Drawing.Size(176, 26);
+            this.tbFolio.Size = new System.Drawing.Size(220, 26);
             this.tbFolio.TabIndex = 1;
             this.tbFolio.InvalidValue += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.tbFolio_InvalidValue);
             // 
             // tbQuantity
             // 
             this.tbQuantity.EditValue = "1";
-            this.tbQuantity.Location = new System.Drawing.Point(200, 230);
+            this.tbQuantity.Location = new System.Drawing.Point(208, 233);
+            this.tbQuantity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbQuantity.Name = "tbQuantity";
             this.tbQuantity.Properties.Appearance.Font = new System.Drawing.Font("Roboto Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbQuantity.Properties.Appearance.Options.UseFont = true;
@@ -216,37 +223,39 @@
             this.tbQuantity.Properties.MaskSettings.Set("mask", "\\d+");
             this.tbQuantity.Properties.MaskSettings.Set("showPlaceholders", false);
             this.tbQuantity.Properties.MaskSettings.Set("allowBlankInput", false);
-            this.tbQuantity.Size = new System.Drawing.Size(174, 26);
+            this.tbQuantity.Size = new System.Drawing.Size(218, 26);
             this.tbQuantity.TabIndex = 6;
             // 
             // tbSalePrice
             // 
-            this.tbSalePrice.Location = new System.Drawing.Point(546, 233);
+            this.tbSalePrice.Location = new System.Drawing.Point(682, 236);
+            this.tbSalePrice.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbSalePrice.Name = "tbSalePrice";
             this.tbSalePrice.Properties.Appearance.Font = new System.Drawing.Font("Roboto Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbSalePrice.Properties.Appearance.Options.UseFont = true;
             this.tbSalePrice.Properties.HideSelection = false;
             this.tbSalePrice.Properties.ReadOnly = true;
-            this.tbSalePrice.Size = new System.Drawing.Size(168, 26);
+            this.tbSalePrice.Size = new System.Drawing.Size(210, 26);
             this.tbSalePrice.TabIndex = 7;
             // 
             // dpDate
             // 
             this.dpDate.Font = new System.Drawing.Font("Roboto Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dpDate.Location = new System.Drawing.Point(506, 36);
+            this.dpDate.Location = new System.Drawing.Point(528, 36);
             this.dpDate.Name = "dpDate";
-            this.dpDate.Size = new System.Drawing.Size(208, 28);
+            this.dpDate.Size = new System.Drawing.Size(364, 28);
             this.dpDate.TabIndex = 2;
             // 
             // tbTotal
             // 
             this.tbTotal.EditValue = "0";
-            this.tbTotal.Location = new System.Drawing.Point(589, 567);
+            this.tbTotal.Location = new System.Drawing.Point(725, 684);
+            this.tbTotal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbTotal.Name = "tbTotal";
             this.tbTotal.Properties.Appearance.Font = new System.Drawing.Font("Roboto Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbTotal.Properties.Appearance.Options.UseFont = true;
             this.tbTotal.Properties.ReadOnly = true;
-            this.tbTotal.Size = new System.Drawing.Size(125, 26);
+            this.tbTotal.Size = new System.Drawing.Size(156, 26);
             this.tbTotal.TabIndex = 27;
             // 
             // btnInsert
@@ -259,9 +268,10 @@
             this.btnInsert.Appearance.Options.UseBorderColor = true;
             this.btnInsert.Appearance.Options.UseFont = true;
             this.btnInsert.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnInsert.ImageOptions.Image")));
-            this.btnInsert.Location = new System.Drawing.Point(577, 292);
+            this.btnInsert.Location = new System.Drawing.Point(710, 301);
+            this.btnInsert.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnInsert.Name = "btnInsert";
-            this.btnInsert.Size = new System.Drawing.Size(137, 40);
+            this.btnInsert.Size = new System.Drawing.Size(171, 50);
             this.btnInsert.TabIndex = 8;
             this.btnInsert.Text = "Insertar";
             // 
@@ -275,9 +285,10 @@
             this.btnDelete.Appearance.Options.UseBorderColor = true;
             this.btnDelete.Appearance.Options.UseFont = true;
             this.btnDelete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.ImageOptions.Image")));
-            this.btnDelete.Location = new System.Drawing.Point(400, 630);
+            this.btnDelete.Location = new System.Drawing.Point(500, 752);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(138, 40);
+            this.btnDelete.Size = new System.Drawing.Size(172, 50);
             this.btnDelete.TabIndex = 9;
             this.btnDelete.Text = "Eliminar";
             // 
@@ -291,9 +302,10 @@
             this.btnClear.Appearance.Options.UseBorderColor = true;
             this.btnClear.Appearance.Options.UseFont = true;
             this.btnClear.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnClear.ImageOptions.Image")));
-            this.btnClear.Location = new System.Drawing.Point(237, 630);
+            this.btnClear.Location = new System.Drawing.Point(279, 752);
+            this.btnClear.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(126, 40);
+            this.btnClear.Size = new System.Drawing.Size(158, 50);
             this.btnClear.TabIndex = 10;
             this.btnClear.Text = "Limpiar";
             // 
@@ -307,15 +319,17 @@
             this.btnSave.Appearance.Options.UseBorderColor = true;
             this.btnSave.Appearance.Options.UseFont = true;
             this.btnSave.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.ImageOptions.Image")));
-            this.btnSave.Location = new System.Drawing.Point(568, 630);
+            this.btnSave.Location = new System.Drawing.Point(699, 752);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(146, 40);
+            this.btnSave.Size = new System.Drawing.Size(182, 50);
             this.btnSave.TabIndex = 11;
             this.btnSave.Text = "Guardar";
             // 
             // tbProductId
             // 
-            this.tbProductId.Location = new System.Drawing.Point(198, 163);
+            this.tbProductId.Location = new System.Drawing.Point(208, 163);
+            this.tbProductId.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbProductId.Name = "tbProductId";
             this.tbProductId.Properties.Appearance.Font = new System.Drawing.Font("Roboto Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbProductId.Properties.Appearance.Options.UseFont = true;
@@ -324,7 +338,7 @@
             this.tbProductId.Properties.MaskSettings.Set("placeholder", '\0');
             this.tbProductId.Properties.MaskSettings.Set("showPlaceholders", false);
             this.tbProductId.Properties.MaskSettings.Set("allowBlankInput", true);
-            this.tbProductId.Size = new System.Drawing.Size(176, 26);
+            this.tbProductId.Size = new System.Drawing.Size(220, 26);
             this.tbProductId.TabIndex = 4;
             // 
             // InventoryView
@@ -332,7 +346,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(779, 741);
+            this.ClientSize = new System.Drawing.Size(932, 836);
             this.Controls.Add(this.tbProductId);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnClear);
