@@ -38,42 +38,20 @@ namespace SqlInventoryLibrary.Repository
                     {                                              
                         cmd.Transaction = transaction;
                         cmd.Connection = conn;
-
-                        cmd.CommandText = "insert into inventory (folio, entryDate, total, movementType) values (@folio,@entryDate,@total,@movementType)";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandText = "spInsertInventory";
                         cmd.Parameters.AddWithValue("@folio", record.Folio);
                         cmd.Parameters.AddWithValue("@entryDate", record.Date);
                         cmd.Parameters.AddWithValue("@total", record.Total);
                         cmd.Parameters.AddWithValue("@movementType", record.MovementType);
                         cmd.ExecuteNonQuery();
 
-                        int i = 0;
-                        foreach (DetailsRecord details in record.DetailsRecords)
-                        {
-                            cmd.CommandText = $"insert into inventoryDetails (folio, productId, quantity) values (@folio{i},@productId{i},@quantity{i})";
-                            cmd.Parameters.AddWithValue($"@folio{i}", record.Folio);
-                            cmd.Parameters.AddWithValue($"@productId{i}", details.Product.ProductID);
-                            cmd.Parameters.AddWithValue($"@quantity{i}", details.Quantity);
-                            cmd.ExecuteNonQuery();
 
-                            if(record.MovementType == "Entrada")
-                            {
-
-                                details.Product.Balance += details.Quantity;
-                                cmd.CommandText = $"update products set balance = @balance{i} where productId = @id{i}";                                
-                                cmd.Parameters.AddWithValue($"@balance{i}",details.Product.Balance);
-                                cmd.Parameters.AddWithValue($"@id{i}", details.Product.ProductID);
-                                cmd.ExecuteNonQuery();
-                            }else if(record.MovementType == "Salida")
-                            {
-                                details.Product.Balance -= details.Quantity;
-                                cmd.CommandText = $"update products set balance = @balance{i} where productId = @id{i}";
-                                cmd.Parameters.AddWithValue($"@balance{i}", details.Product.Balance);
-                                cmd.Parameters.AddWithValue($"@id{i}", details.Product.ProductID);
-                                cmd.ExecuteNonQuery();
-                            }
-
-                            i++;
-                        }
+                        cmd.CommandText = "spInsertInventoryDetails";
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@tableInventoryDetails", record.DetailsRecordsDataTable);
+                        cmd.ExecuteNonQuery();
+                  
 
                         transaction.Commit();
                     }
@@ -94,7 +72,7 @@ namespace SqlInventoryLibrary.Repository
             }
         }
 
-        public bool DeleteRegisters(Record record)
+        public bool DeleteRegisters(Record record)//Cambiar por datatable
         {
             try
             {
@@ -174,7 +152,7 @@ namespace SqlInventoryLibrary.Repository
                 {
                     conn.Open();
                     cmd.Connection = conn;
-                    cmd.CommandText = $"Select * from inventory";
+                    cmd.CommandText = $"Select * from inventoryView";
                     data.Load(cmd.ExecuteReader());
                 }
 
@@ -197,7 +175,7 @@ namespace SqlInventoryLibrary.Repository
                 {
                     conn.Open();
                     cmd.Connection = conn;
-                    cmd.CommandText = $"Select * from inventory where folio = @folio";
+                    cmd.CommandText = $"Select * from inventoryView where folio = @folio";
                     cmd.Parameters.AddWithValue("@folio", folio);
                     data.Load(cmd.ExecuteReader());
                 }
@@ -220,7 +198,7 @@ namespace SqlInventoryLibrary.Repository
                 {
                     conn.Open();
                     cmd.Connection = conn;
-                    cmd.CommandText = $"select id.productId, p.description, id.quantity, p.salePrice, (p.salePrice * id.quantity) as amount from inventoryDetails id join products p on id.productId = p.productId where id.folio = @folio";
+                    cmd.CommandText = $"select * from inventoryDetailsAndProductsView where folio = @folio";
                     cmd.Parameters.AddWithValue("@folio", folio);
                     data.Load(cmd.ExecuteReader());
 
@@ -242,7 +220,7 @@ namespace SqlInventoryLibrary.Repository
                 {
                     conn.Open();
                     cmd.Connection = conn;
-                    cmd.CommandText = "select * from products";
+                    cmd.CommandText = "select * from productsView";
                     cmd.CommandTimeout = 120;
                     data.Load(cmd.ExecuteReader());
 
@@ -264,13 +242,16 @@ namespace SqlInventoryLibrary.Repository
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     conn.Open();
+
                     cmd.Connection = conn;
-                    cmd.CommandText = "insert into products (productId, description, salePrice, balance) values (@productId,@description,@salePrice,@balance)";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "spInsertProduct";
                     cmd.CommandTimeout = 120;
                     cmd.Parameters.AddWithValue("@productId", product.ProductID);
                     cmd.Parameters.AddWithValue("@description", product.Description);
                     cmd.Parameters.AddWithValue("@salePrice", product.SalePrice);
                     cmd.Parameters.AddWithValue("@balance", product.Balance);
+
                     cmd.ExecuteNonQuery();
                 }
                 return true;
@@ -291,7 +272,8 @@ namespace SqlInventoryLibrary.Repository
                 {
                     conn.Open();
                     cmd.Connection = conn;
-                    cmd.CommandText = "delete from products where productId = @productId";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "spDeleteProduct";
                     cmd.CommandTimeout = 120;
                     cmd.Parameters.AddWithValue("@productId", productID);
                     cmd.ExecuteNonQuery();
@@ -315,7 +297,8 @@ namespace SqlInventoryLibrary.Repository
                 {
                     conn.Open();
                     cmd.Connection = conn;
-                    cmd.CommandText = "update products set description = @description, salePrice = @salePrice, balance = @balance  where productId = @productId";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "spUpdateProducts";
                     cmd.CommandTimeout = 120;
                     cmd.Parameters.AddWithValue("@productId", product.ProductID);
                     cmd.Parameters.AddWithValue("@description", product.Description);
@@ -343,7 +326,7 @@ namespace SqlInventoryLibrary.Repository
                 {
                     conn.Open();
                     cmd.Connection = conn;
-                    cmd.CommandText = "Select * from products where productId = @productId";
+                    cmd.CommandText = "Select * from productsView where productId = @productId";
                     cmd.CommandTimeout = 120;
                     cmd.Parameters.AddWithValue("@productId", product.ProductID);
                     dt.Load(cmd.ExecuteReader());
@@ -371,7 +354,7 @@ namespace SqlInventoryLibrary.Repository
                 {
                     conn.Open();
                     cmd.Connection = conn;
-                    cmd.CommandText = "select Max(Folio) FROM inventory";
+                    cmd.CommandText = "select Max(Folio) FROM inventoryView";
                     cmd.CommandTimeout = 120;                  
                     dt.Load(cmd.ExecuteReader());
 
@@ -398,7 +381,7 @@ namespace SqlInventoryLibrary.Repository
                 {
                     conn.Open();
                     cmd.Connection = conn;
-                    cmd.CommandText = "select Max(productId) FROM products";
+                    cmd.CommandText = "select Max(productId) FROM productsView";
                     cmd.CommandTimeout = 120;
                     dt.Load(cmd.ExecuteReader());
 
